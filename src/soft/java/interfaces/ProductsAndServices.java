@@ -43,8 +43,47 @@ public class ProductsAndServices extends javax.swing.JFrame {
         txt_efectivo_pago.setEditable(false);
         txt_cantidad_restant.setEditable(false);
         txt_cambio.setEditable(false);
+            btn_venta.setEnabled(true);
             btn_cancelar.setEnabled(false);
             btn_liquidacion.setEnabled(false); 
+            btn_añadir_serv.setEnabled(false);
+            btn_cancelar_serv.setEnabled(false); 
+    }
+    
+     // Metodo para desbloquear campos de texto y botones
+    void desbloquear(){
+        txt_nombre_prod.setEditable(true);
+        txt_estado_prod.setEditable(false);
+        jcb_tipo_prod.setEditable(true);
+        jcb_categoria_prod.setEditable(true);
+        jcb_tamaño_prod.setEditable(true);
+        jcb_estilo_prod.setEditable(true);        
+        txt_cantidad_prod.setEditable(true);        
+        txt_valor_prod.setEditable(false);
+        txt_valor_serv.setEditable(false);
+        jcb_servicio.setEditable(false);
+        jcb_modo_pago.setEditable(true);
+        txt_total_pago.setEditable(false);
+        txt_efectivo_pago.setEditable(true);
+        txt_cantidad_restant.setEditable(false);
+        txt_cambio.setEditable(false);
+            btn_venta.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+            btn_liquidacion.setEnabled(true); 
+            btn_añadir_serv.setEnabled(true);
+            btn_cancelar_serv.setEnabled(false); 
+    }
+    
+    void limpiar(){
+        txt_nombre_prod.setText("");
+        txt_estado_prod.setText("");
+        txt_cantidad_prod.setText("");
+        txt_valor_prod.setText("");
+        txt_valor_serv.setText("");
+        txt_total_pago.setText("");
+        txt_cantidad_restant.setText("");
+        txt_cambio.setText("");
+        txt_efectivo_pago.setText("");
     }
     
     
@@ -779,11 +818,14 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_liquidacionActionPerformed
 
     private void btn_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ventaActionPerformed
-        // TODO add your handling code here:
+       // Boton nueva venta
+       desbloquear();
     }//GEN-LAST:event_btn_ventaActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        // TODO add your handling code here:
+       // Boton cancelar
+       bloquear();
+       limpiar();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void txt_nombre_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombre_prodActionPerformed
@@ -819,12 +861,16 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_valor_prodKeyTyped
 
     private void btn_añadir_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadir_servActionPerformed
-        // Boton Dar ingreso
+        // Boton Añadir servicio
+        btn_cancelar_serv.setEnabled(true);
+        jcb_servicio.setEditable(true);
         
     }//GEN-LAST:event_btn_añadir_servActionPerformed
 
     private void btn_cancelar_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_servActionPerformed
-        // TODO add your handling code here:
+        // Boton Cancelar servicio
+        jcb_servicio.setEditable(false);
+        btn_cancelar_serv.setEnabled(false);
     }//GEN-LAST:event_btn_cancelar_servActionPerformed
 
     private void txt_total_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_total_pagoActionPerformed

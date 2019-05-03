@@ -21,8 +21,44 @@ public class RegistryServices extends javax.swing.JFrame {
         initComponents();
         setTitle("Registro Servicios");
         this.setLocationRelativeTo(null);
+        bloquear();
     }
 
+    
+    // Metodo para bloquear campos de texto y botones
+    void bloquear(){
+        txt_nombre_serv.setEditable(false);
+        txa_descipcion_serv.setEditable(false);
+        txt_precio_serv.setEditable(false);
+            btn_enable.setEnabled(true);
+            btn_disable.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_modified.setEnabled(false);
+            btn_update.setEnabled(false);
+            btn_delete.setEnabled(false);
+    }
+    
+    // Metodo para desbloquear campos de texto y botones
+    void desbloquear(){
+        txt_nombre_serv.setEditable(true);
+        txa_descipcion_serv.setEditable(true);
+        txt_precio_serv.setEditable(true);
+            btn_enable.setEnabled(false);
+            btn_disable.setEnabled(true);
+            btn_add.setEnabled(true);
+            btn_modified.setEnabled(true);
+            btn_update.setEnabled(true);
+            btn_delete.setEnabled(true);
+    }
+    
+    // Metodo para limpiar los campos de textos
+    void limpiar(){
+        txt_nombre_serv.setText("");
+        txa_descipcion_serv.setText("");
+        txt_precio_serv.setText("");
+    }
+    
+    
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -37,12 +73,12 @@ public class RegistryServices extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_placa = new javax.swing.JTextField();
+        txt_nombre_serv = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        txt_placa6 = new javax.swing.JTextField();
+        txt_precio_serv = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         btn_add = new javax.swing.JButton();
         btn_modified = new javax.swing.JButton();
@@ -57,7 +93,7 @@ public class RegistryServices extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table_tarifa = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txa_descipcion_serv = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -156,35 +192,35 @@ public class RegistryServices extends javax.swing.JFrame {
 
         jLabel3.setText("Servicio");
 
-        txt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa.addActionListener(new java.awt.event.ActionListener() {
+        txt_nombre_serv.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_nombre_serv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placaActionPerformed(evt);
+                txt_nombre_servActionPerformed(evt);
             }
         });
-        txt_placa.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_nombre_serv.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placaKeyTyped(evt);
+                txt_nombre_servKeyTyped(evt);
             }
         });
 
         jLabel4.setText("Descripción del");
 
-        jLabel9.setText("Producto");
+        jLabel9.setText("Servicio");
 
         jLabel16.setText("Precio");
 
         jLabel17.setText("Unitario");
 
-        txt_placa6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa6.addActionListener(new java.awt.event.ActionListener() {
+        txt_precio_serv.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_precio_serv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa6ActionPerformed(evt);
+                txt_precio_servActionPerformed(evt);
             }
         });
-        txt_placa6.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_precio_serv.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa6KeyTyped(evt);
+                txt_precio_servKeyTyped(evt);
             }
         });
 
@@ -356,9 +392,9 @@ public class RegistryServices extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txa_descipcion_serv.setColumns(20);
+        txa_descipcion_serv.setRows(5);
+        jScrollPane2.setViewportView(txa_descipcion_serv);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -375,9 +411,9 @@ public class RegistryServices extends javax.swing.JFrame {
                     .addComponent(jLabel16))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_placa6)
+                    .addComponent(txt_precio_serv)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                    .addComponent(txt_placa, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(txt_nombre_serv, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -396,7 +432,7 @@ public class RegistryServices extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombre_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -410,7 +446,7 @@ public class RegistryServices extends javax.swing.JFrame {
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_precio_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
@@ -455,11 +491,14 @@ public class RegistryServices extends javax.swing.JFrame {
     }//GEN-LAST:event_formMousePressed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
-
+        // Boton Cancelar
+        bloquear();
+        limpiar();
     }//GEN-LAST:event_btn_disableActionPerformed
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
-
+        // Boton Enable
+        desbloquear();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
@@ -478,25 +517,25 @@ public class RegistryServices extends javax.swing.JFrame {
         // Boton Guardar
     }//GEN-LAST:event_btn_addActionPerformed
 
-    private void txt_placa6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa6KeyTyped
+    private void txt_precio_servKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precio_servKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6KeyTyped
+    }//GEN-LAST:event_txt_precio_servKeyTyped
 
-    private void txt_placa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa6ActionPerformed
+    private void txt_precio_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precio_servActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6ActionPerformed
+    }//GEN-LAST:event_txt_precio_servActionPerformed
 
-    private void txt_placaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placaKeyTyped
+    private void txt_nombre_servKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombre_servKeyTyped
         // Limite caracteres placa
         int characterLimit = 15;
-        if (txt_placa.getText().length() >= characterLimit){
+        if (txt_nombre_serv.getText().length() >= characterLimit){
             evt.consume();
         }
-    }//GEN-LAST:event_txt_placaKeyTyped
+    }//GEN-LAST:event_txt_nombre_servKeyTyped
 
-    private void txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placaActionPerformed
+    private void txt_nombre_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombre_servActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placaActionPerformed
+    }//GEN-LAST:event_txt_nombre_servActionPerformed
 
     /**
      * @param args the command line arguments
@@ -559,11 +598,11 @@ public class RegistryServices extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable table_tarifa;
+    private javax.swing.JTextArea txa_descipcion_serv;
     private javax.swing.JTextField txt_buscar;
-    public static javax.swing.JTextField txt_placa;
-    public static javax.swing.JTextField txt_placa6;
+    public static javax.swing.JTextField txt_nombre_serv;
+    public static javax.swing.JTextField txt_precio_serv;
     // End of variables declaration//GEN-END:variables
 
 }

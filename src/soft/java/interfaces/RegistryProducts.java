@@ -22,8 +22,57 @@ public class RegistryProducts extends javax.swing.JFrame {
         initComponents();
         setTitle("Registro Productos");
         this.setLocationRelativeTo(null);
+        bloquear();
     }
 
+    
+    // Metodo para bloquear campos de texto y botones
+    void bloquear(){
+        txt_name_produc.setEditable(false);
+        txt_category_produc.setEditable(false);
+        txt_type_produc.setEditable(false);
+        txt_tamaño_produc.setEditable(false);
+        txt_style_produc.setEditable(false);
+        txt_date_produc.setEditable(false);
+        txt_price_produc.setEditable(false);
+        txt_cantidad_produc.setEditable(false);
+            btn_enable.setEnabled(true);
+            btn_disable.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_modified.setEnabled(false);
+            btn_update.setEnabled(false);
+            btn_delete.setEnabled(false);
+    }
+    
+    // Metodo para desbloquear campos de texto y botones
+    void desbloquear(){
+        txt_name_produc.setEditable(true);
+        txt_category_produc.setEditable(true);
+        txt_type_produc.setEditable(true);
+        txt_tamaño_produc.setEditable(true);
+        txt_style_produc.setEditable(true);
+        txt_date_produc.setEditable(true);
+        txt_price_produc.setEditable(true);
+        txt_cantidad_produc.setEditable(true);
+            btn_enable.setEnabled(false);
+            btn_disable.setEnabled(true);
+            btn_add.setEnabled(true);
+            btn_modified.setEnabled(true);
+            btn_update.setEnabled(true);
+            btn_delete.setEnabled(true);
+    }
+    
+    // Metodo para limpiar los campos de textos
+    void limpiar(){
+        txt_name_produc.setText("");
+        txt_category_produc.setText("");
+        txt_type_produc.setText("");
+        txt_tamaño_produc.setText("");
+        txt_style_produc.setText("");
+        txt_date_produc.setText("");
+        txt_price_produc.setText("");
+        txt_cantidad_produc.setText("");
+    }
     
     
     @SuppressWarnings("unchecked")
@@ -41,26 +90,26 @@ public class RegistryProducts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txt_placa = new javax.swing.JTextField();
-        txt_placa1 = new javax.swing.JTextField();
-        txt_placa2 = new javax.swing.JTextField();
+        txt_name_produc = new javax.swing.JTextField();
+        txt_category_produc = new javax.swing.JTextField();
+        txt_type_produc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txt_placa3 = new javax.swing.JTextField();
+        txt_tamaño_produc = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txt_placa4 = new javax.swing.JTextField();
-        txt_placa5 = new javax.swing.JTextField();
+        txt_date_produc = new javax.swing.JTextField();
+        txt_style_produc = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        txt_placa6 = new javax.swing.JTextField();
+        txt_price_produc = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        txt_placa7 = new javax.swing.JTextField();
+        txt_cantidad_produc = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         btn_add = new javax.swing.JButton();
         btn_modified = new javax.swing.JButton();
@@ -176,39 +225,39 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jLabel8.setText("Producto");
 
-        txt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa.addActionListener(new java.awt.event.ActionListener() {
+        txt_name_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_name_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placaActionPerformed(evt);
+                txt_name_producActionPerformed(evt);
             }
         });
-        txt_placa.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_name_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placaKeyTyped(evt);
+                txt_name_producKeyTyped(evt);
             }
         });
 
-        txt_placa1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa1.addActionListener(new java.awt.event.ActionListener() {
+        txt_category_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_category_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa1ActionPerformed(evt);
+                txt_category_producActionPerformed(evt);
             }
         });
-        txt_placa1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_category_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa1KeyTyped(evt);
+                txt_category_producKeyTyped(evt);
             }
         });
 
-        txt_placa2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa2.addActionListener(new java.awt.event.ActionListener() {
+        txt_type_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_type_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa2ActionPerformed(evt);
+                txt_type_producActionPerformed(evt);
             }
         });
-        txt_placa2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_type_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa2KeyTyped(evt);
+                txt_type_producKeyTyped(evt);
             }
         });
 
@@ -216,15 +265,15 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jLabel9.setText("Producto");
 
-        txt_placa3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa3.addActionListener(new java.awt.event.ActionListener() {
+        txt_tamaño_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_tamaño_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa3ActionPerformed(evt);
+                txt_tamaño_producActionPerformed(evt);
             }
         });
-        txt_placa3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_tamaño_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa3KeyTyped(evt);
+                txt_tamaño_producKeyTyped(evt);
             }
         });
 
@@ -236,27 +285,27 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jLabel13.setText("Producto");
 
-        txt_placa4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa4.addActionListener(new java.awt.event.ActionListener() {
+        txt_date_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_date_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa4ActionPerformed(evt);
+                txt_date_producActionPerformed(evt);
             }
         });
-        txt_placa4.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_date_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa4KeyTyped(evt);
+                txt_date_producKeyTyped(evt);
             }
         });
 
-        txt_placa5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa5.addActionListener(new java.awt.event.ActionListener() {
+        txt_style_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_style_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa5ActionPerformed(evt);
+                txt_style_producActionPerformed(evt);
             }
         });
-        txt_placa5.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_style_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa5KeyTyped(evt);
+                txt_style_producKeyTyped(evt);
             }
         });
 
@@ -268,15 +317,15 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jLabel17.setText("Unitario");
 
-        txt_placa6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa6.addActionListener(new java.awt.event.ActionListener() {
+        txt_price_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_price_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa6ActionPerformed(evt);
+                txt_price_producActionPerformed(evt);
             }
         });
-        txt_placa6.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_price_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa6KeyTyped(evt);
+                txt_price_producKeyTyped(evt);
             }
         });
 
@@ -284,15 +333,15 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jLabel19.setText("Disponible");
 
-        txt_placa7.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa7.addActionListener(new java.awt.event.ActionListener() {
+        txt_cantidad_produc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_cantidad_produc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa7ActionPerformed(evt);
+                txt_cantidad_producActionPerformed(evt);
             }
         });
-        txt_placa7.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_cantidad_produc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa7KeyTyped(evt);
+                txt_cantidad_producKeyTyped(evt);
             }
         });
 
@@ -476,34 +525,34 @@ public class RegistryProducts extends javax.swing.JFrame {
                             .addComponent(jLabel17)
                             .addComponent(jLabel16))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_placa6, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_price_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel13)
                                 .addComponent(jLabel12))
                             .addGap(31, 31, 31)
-                            .addComponent(txt_placa5, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_style_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
-                                .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_name_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_placa2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_type_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(138, 138, 138)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_category_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel11)
@@ -514,14 +563,14 @@ public class RegistryProducts extends javax.swing.JFrame {
                                     .addComponent(jLabel14)))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_placa4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_placa3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_date_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_tamaño_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel19)
                             .addComponent(jLabel18))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa7, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_cantidad_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -545,10 +594,10 @@ public class RegistryProducts extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_name_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_category_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addGap(3, 3, 3)))
                         .addGap(18, 18, 18)
@@ -562,8 +611,8 @@ public class RegistryProducts extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_placa3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_placa2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_tamaño_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_type_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
@@ -573,7 +622,7 @@ public class RegistryProducts extends javax.swing.JFrame {
                                         .addComponent(jLabel12)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_placa5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txt_style_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,19 +630,19 @@ public class RegistryProducts extends javax.swing.JFrame {
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGap(22, 22, 22)
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_placa4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txt_date_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_price_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cantidad_produc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
@@ -637,73 +686,73 @@ public class RegistryProducts extends javax.swing.JFrame {
         y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
-    private void txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placaActionPerformed
+    private void txt_name_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_name_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placaActionPerformed
+    }//GEN-LAST:event_txt_name_producActionPerformed
 
-    private void txt_placaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placaKeyTyped
+    private void txt_name_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_name_producKeyTyped
         // Limite caracteres placa
         int characterLimit = 15;
-        if (txt_placa.getText().length() >= characterLimit){
+        if (txt_name_produc.getText().length() >= characterLimit){
             evt.consume();
         }
-    }//GEN-LAST:event_txt_placaKeyTyped
+    }//GEN-LAST:event_txt_name_producKeyTyped
 
-    private void txt_placa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa1ActionPerformed
+    private void txt_category_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_category_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa1ActionPerformed
+    }//GEN-LAST:event_txt_category_producActionPerformed
 
-    private void txt_placa1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa1KeyTyped
+    private void txt_category_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_category_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa1KeyTyped
+    }//GEN-LAST:event_txt_category_producKeyTyped
 
-    private void txt_placa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa2ActionPerformed
+    private void txt_type_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_type_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa2ActionPerformed
+    }//GEN-LAST:event_txt_type_producActionPerformed
 
-    private void txt_placa2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa2KeyTyped
+    private void txt_type_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_type_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa2KeyTyped
+    }//GEN-LAST:event_txt_type_producKeyTyped
 
-    private void txt_placa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa3ActionPerformed
+    private void txt_tamaño_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tamaño_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa3ActionPerformed
+    }//GEN-LAST:event_txt_tamaño_producActionPerformed
 
-    private void txt_placa3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa3KeyTyped
+    private void txt_tamaño_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tamaño_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa3KeyTyped
+    }//GEN-LAST:event_txt_tamaño_producKeyTyped
 
-    private void txt_placa4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa4ActionPerformed
+    private void txt_date_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_date_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa4ActionPerformed
+    }//GEN-LAST:event_txt_date_producActionPerformed
 
-    private void txt_placa4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa4KeyTyped
+    private void txt_date_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_date_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa4KeyTyped
+    }//GEN-LAST:event_txt_date_producKeyTyped
 
-    private void txt_placa5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa5ActionPerformed
+    private void txt_style_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_style_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa5ActionPerformed
+    }//GEN-LAST:event_txt_style_producActionPerformed
 
-    private void txt_placa5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa5KeyTyped
+    private void txt_style_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_style_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa5KeyTyped
+    }//GEN-LAST:event_txt_style_producKeyTyped
 
-    private void txt_placa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa6ActionPerformed
+    private void txt_price_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_price_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6ActionPerformed
+    }//GEN-LAST:event_txt_price_producActionPerformed
 
-    private void txt_placa6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa6KeyTyped
+    private void txt_price_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_price_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6KeyTyped
+    }//GEN-LAST:event_txt_price_producKeyTyped
 
-    private void txt_placa7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa7ActionPerformed
+    private void txt_cantidad_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cantidad_producActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa7ActionPerformed
+    }//GEN-LAST:event_txt_cantidad_producActionPerformed
 
-    private void txt_placa7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa7KeyTyped
+    private void txt_cantidad_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidad_producKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa7KeyTyped
+    }//GEN-LAST:event_txt_cantidad_producKeyTyped
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Guardar
@@ -726,11 +775,14 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
-
+        // Boton Enable
+        desbloquear();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
-
+        // Boton cancelar
+        bloquear();
+        limpiar();
     }//GEN-LAST:event_btn_disableActionPerformed
 
     /**
@@ -805,13 +857,13 @@ public class RegistryProducts extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_tarifa;
     private javax.swing.JTextField txt_buscar;
-    public static javax.swing.JTextField txt_placa;
-    public static javax.swing.JTextField txt_placa1;
-    public static javax.swing.JTextField txt_placa2;
-    public static javax.swing.JTextField txt_placa3;
-    public static javax.swing.JTextField txt_placa4;
-    public static javax.swing.JTextField txt_placa5;
-    public static javax.swing.JTextField txt_placa6;
-    public static javax.swing.JTextField txt_placa7;
+    public static javax.swing.JTextField txt_cantidad_produc;
+    public static javax.swing.JTextField txt_category_produc;
+    public static javax.swing.JTextField txt_date_produc;
+    public static javax.swing.JTextField txt_name_produc;
+    public static javax.swing.JTextField txt_price_produc;
+    public static javax.swing.JTextField txt_style_produc;
+    public static javax.swing.JTextField txt_tamaño_produc;
+    public static javax.swing.JTextField txt_type_produc;
     // End of variables declaration//GEN-END:variables
 }

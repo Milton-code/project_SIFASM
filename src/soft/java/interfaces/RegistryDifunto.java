@@ -22,7 +22,60 @@ public class RegistryDifunto extends javax.swing.JFrame {
         initComponents();
         setTitle("Matricula Difunto");
         this.setLocationRelativeTo(null);
+        bloquear();
     }
+    
+    // Metodo para bloquear campos de texto y botones
+    void bloquear(){
+        txt_name_clien.setEditable(false);
+        txt_apellido_clien.setEditable(false);
+        txt_typedocu_clien.setEditable(false);
+        txt_num_clien.setEditable(false);
+        txt_name_difun.setEditable(false);
+        txt_apellido_difun.setEditable(false);
+        txt_nacimiento_difun.setEditable(false);
+        txt_kill_difun.setEditable(false);
+        txt_msm_difun.setEditable(false);
+            btn_enable.setEnabled(true);
+            btn_disable.setEnabled(false);
+            btn_add.setEnabled(false);
+            btn_modified.setEnabled(false);
+            btn_update.setEnabled(false);
+            btn_delete.setEnabled(false);
+    }
+    
+    // Metodo para desbloquear campos de texto y botones
+    void desbloquear(){
+       txt_name_clien.setEditable(true);
+       txt_apellido_clien.setEditable(true);
+       txt_typedocu_clien.setEditable(true);
+       txt_num_clien.setEditable(true);
+       txt_name_difun.setEditable(true);
+       txt_apellido_difun.setEditable(true);
+       txt_nacimiento_difun.setEditable(true);
+       txt_kill_difun.setEditable(true);
+       txt_msm_difun.setEditable(true);
+           btn_enable.setEnabled(false);
+           btn_disable.setEnabled(true);
+           btn_add.setEnabled(true);
+           btn_modified.setEnabled(true);
+           btn_update.setEnabled(true);
+           btn_delete.setEnabled(true);
+   }
+    
+    // Metodo para limpiar los campos de textos
+    void limpiar(){
+        txt_name_clien.setText("");
+        txt_apellido_clien.setText("");
+        txt_typedocu_clien.setText("");
+        txt_num_clien.setText("");
+        txt_name_difun.setText("");
+        txt_apellido_difun.setText("");
+        txt_nacimiento_difun.setText("");
+        txt_kill_difun.setText("");
+        txt_msm_difun.setText("");
+    }
+    
 
 
     @SuppressWarnings("unchecked")
@@ -43,12 +96,12 @@ public class RegistryDifunto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txt_placa = new javax.swing.JTextField();
-        txt_placa1 = new javax.swing.JTextField();
-        txt_placa2 = new javax.swing.JTextField();
+        txt_name_clien = new javax.swing.JTextField();
+        txt_apellido_clien = new javax.swing.JTextField();
+        txt_typedocu_clien = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txt_placa3 = new javax.swing.JTextField();
+        txt_num_clien = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -64,18 +117,18 @@ public class RegistryDifunto extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txt_placa4 = new javax.swing.JTextField();
+        txt_name_difun = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        txt_placa5 = new javax.swing.JTextField();
+        txt_apellido_difun = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        txt_placa6 = new javax.swing.JTextField();
+        txt_nacimiento_difun = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        txt_placa7 = new javax.swing.JTextField();
+        txt_kill_difun = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txt_msm_difun = new javax.swing.JTextArea();
         jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -212,39 +265,39 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel8.setText("Cliente");
 
-        txt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa.addActionListener(new java.awt.event.ActionListener() {
+        txt_name_clien.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_name_clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placaActionPerformed(evt);
+                txt_name_clienActionPerformed(evt);
             }
         });
-        txt_placa.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_name_clien.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placaKeyTyped(evt);
+                txt_name_clienKeyTyped(evt);
             }
         });
 
-        txt_placa1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa1.addActionListener(new java.awt.event.ActionListener() {
+        txt_apellido_clien.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_apellido_clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa1ActionPerformed(evt);
+                txt_apellido_clienActionPerformed(evt);
             }
         });
-        txt_placa1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_apellido_clien.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa1KeyTyped(evt);
+                txt_apellido_clienKeyTyped(evt);
             }
         });
 
-        txt_placa2.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa2.addActionListener(new java.awt.event.ActionListener() {
+        txt_typedocu_clien.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_typedocu_clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa2ActionPerformed(evt);
+                txt_typedocu_clienActionPerformed(evt);
             }
         });
-        txt_placa2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_typedocu_clien.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa2KeyTyped(evt);
+                txt_typedocu_clienKeyTyped(evt);
             }
         });
 
@@ -252,15 +305,15 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel9.setText("Documento");
 
-        txt_placa3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa3.addActionListener(new java.awt.event.ActionListener() {
+        txt_num_clien.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_num_clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa3ActionPerformed(evt);
+                txt_num_clienActionPerformed(evt);
             }
         });
-        txt_placa3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_num_clien.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa3KeyTyped(evt);
+                txt_num_clienKeyTyped(evt);
             }
         });
 
@@ -280,13 +333,13 @@ public class RegistryDifunto extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_name_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_typedocu_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(138, 138, 138)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -294,13 +347,13 @@ public class RegistryDifunto extends javax.swing.JFrame {
                             .addComponent(jLabel11)
                             .addComponent(jLabel10))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_num_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_apellido_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -312,10 +365,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_name_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_apellido_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -328,12 +381,12 @@ public class RegistryDifunto extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txt_placa2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_typedocu_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_num_clien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -484,15 +537,15 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel14.setText("Difunto");
 
-        txt_placa4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa4.addActionListener(new java.awt.event.ActionListener() {
+        txt_name_difun.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_name_difun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa4ActionPerformed(evt);
+                txt_name_difunActionPerformed(evt);
             }
         });
-        txt_placa4.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_name_difun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa4KeyTyped(evt);
+                txt_name_difunKeyTyped(evt);
             }
         });
 
@@ -500,15 +553,15 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel16.setText("Difunto");
 
-        txt_placa5.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa5.addActionListener(new java.awt.event.ActionListener() {
+        txt_apellido_difun.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_apellido_difun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa5ActionPerformed(evt);
+                txt_apellido_difunActionPerformed(evt);
             }
         });
-        txt_placa5.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_apellido_difun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa5KeyTyped(evt);
+                txt_apellido_difunKeyTyped(evt);
             }
         });
 
@@ -516,15 +569,15 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel18.setText("Nacimiento");
 
-        txt_placa6.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa6.addActionListener(new java.awt.event.ActionListener() {
+        txt_nacimiento_difun.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_nacimiento_difun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa6ActionPerformed(evt);
+                txt_nacimiento_difunActionPerformed(evt);
             }
         });
-        txt_placa6.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_nacimiento_difun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa6KeyTyped(evt);
+                txt_nacimiento_difunKeyTyped(evt);
             }
         });
 
@@ -532,21 +585,21 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         jLabel20.setText("Fallecimiento");
 
-        txt_placa7.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txt_placa7.addActionListener(new java.awt.event.ActionListener() {
+        txt_kill_difun.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_kill_difun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_placa7ActionPerformed(evt);
+                txt_kill_difunActionPerformed(evt);
             }
         });
-        txt_placa7.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_kill_difun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_placa7KeyTyped(evt);
+                txt_kill_difunKeyTyped(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txt_msm_difun.setColumns(20);
+        txt_msm_difun.setRows(5);
+        jScrollPane2.setViewportView(txt_msm_difun);
 
         jLabel21.setText("Mensaje");
 
@@ -562,7 +615,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
                             .addComponent(jLabel14)
                             .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addComponent(txt_placa4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_name_difun, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
@@ -571,7 +624,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2)
-                            .addComponent(txt_placa6, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
+                            .addComponent(txt_nacimiento_difun, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))
                 .addGap(138, 138, 138)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
@@ -580,8 +633,8 @@ public class RegistryDifunto extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_placa5, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                    .addComponent(txt_placa7))
+                    .addComponent(txt_apellido_difun, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                    .addComponent(txt_kill_difun))
                 .addGap(296, 296, 296))
         );
         jPanel6Layout.setVerticalGroup(
@@ -593,9 +646,9 @@ public class RegistryDifunto extends javax.swing.JFrame {
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_name_difun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txt_placa5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_apellido_difun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addComponent(jLabel15)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -606,12 +659,12 @@ public class RegistryDifunto extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nacimiento_difun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_placa7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_kill_difun, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -646,41 +699,41 @@ public class RegistryDifunto extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placaActionPerformed
+    private void txt_name_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_name_clienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placaActionPerformed
+    }//GEN-LAST:event_txt_name_clienActionPerformed
 
-    private void txt_placaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placaKeyTyped
+    private void txt_name_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_name_clienKeyTyped
         // Limite caracteres placa
         int characterLimit = 15;
-        if (txt_placa.getText().length() >= characterLimit){
+        if (txt_name_clien.getText().length() >= characterLimit){
             evt.consume();
         }
-    }//GEN-LAST:event_txt_placaKeyTyped
+    }//GEN-LAST:event_txt_name_clienKeyTyped
 
-    private void txt_placa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa1ActionPerformed
+    private void txt_apellido_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellido_clienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa1ActionPerformed
+    }//GEN-LAST:event_txt_apellido_clienActionPerformed
 
-    private void txt_placa1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa1KeyTyped
+    private void txt_apellido_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_apellido_clienKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa1KeyTyped
+    }//GEN-LAST:event_txt_apellido_clienKeyTyped
 
-    private void txt_placa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa2ActionPerformed
+    private void txt_typedocu_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_typedocu_clienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa2ActionPerformed
+    }//GEN-LAST:event_txt_typedocu_clienActionPerformed
 
-    private void txt_placa2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa2KeyTyped
+    private void txt_typedocu_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_typedocu_clienKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa2KeyTyped
+    }//GEN-LAST:event_txt_typedocu_clienKeyTyped
 
-    private void txt_placa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa3ActionPerformed
+    private void txt_num_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_num_clienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa3ActionPerformed
+    }//GEN-LAST:event_txt_num_clienActionPerformed
 
-    private void txt_placa3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa3KeyTyped
+    private void txt_num_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_clienKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa3KeyTyped
+    }//GEN-LAST:event_txt_num_clienKeyTyped
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Guardar
@@ -703,44 +756,47 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
-
+        // Boton enable
+        desbloquear();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
-
+        // Boton cancelar
+        bloquear();
+        limpiar();
     }//GEN-LAST:event_btn_disableActionPerformed
 
-    private void txt_placa4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa4ActionPerformed
+    private void txt_name_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_name_difunActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa4ActionPerformed
+    }//GEN-LAST:event_txt_name_difunActionPerformed
 
-    private void txt_placa4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa4KeyTyped
+    private void txt_name_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_name_difunKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa4KeyTyped
+    }//GEN-LAST:event_txt_name_difunKeyTyped
 
-    private void txt_placa5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa5ActionPerformed
+    private void txt_apellido_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellido_difunActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa5ActionPerformed
+    }//GEN-LAST:event_txt_apellido_difunActionPerformed
 
-    private void txt_placa5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa5KeyTyped
+    private void txt_apellido_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_apellido_difunKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa5KeyTyped
+    }//GEN-LAST:event_txt_apellido_difunKeyTyped
 
-    private void txt_placa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa6ActionPerformed
+    private void txt_nacimiento_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nacimiento_difunActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6ActionPerformed
+    }//GEN-LAST:event_txt_nacimiento_difunActionPerformed
 
-    private void txt_placa6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa6KeyTyped
+    private void txt_nacimiento_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nacimiento_difunKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa6KeyTyped
+    }//GEN-LAST:event_txt_nacimiento_difunKeyTyped
 
-    private void txt_placa7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_placa7ActionPerformed
+    private void txt_kill_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kill_difunActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa7ActionPerformed
+    }//GEN-LAST:event_txt_kill_difunActionPerformed
 
-    private void txt_placa7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_placa7KeyTyped
+    private void txt_kill_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kill_difunKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_placa7KeyTyped
+    }//GEN-LAST:event_txt_kill_difunKeyTyped
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
         // Mouse Dragged
@@ -827,16 +883,16 @@ public class RegistryDifunto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable table_tarifa;
+    public static javax.swing.JTextField txt_apellido_clien;
+    public static javax.swing.JTextField txt_apellido_difun;
     private javax.swing.JTextField txt_buscar;
-    public static javax.swing.JTextField txt_placa;
-    public static javax.swing.JTextField txt_placa1;
-    public static javax.swing.JTextField txt_placa2;
-    public static javax.swing.JTextField txt_placa3;
-    public static javax.swing.JTextField txt_placa4;
-    public static javax.swing.JTextField txt_placa5;
-    public static javax.swing.JTextField txt_placa6;
-    public static javax.swing.JTextField txt_placa7;
+    public static javax.swing.JTextField txt_kill_difun;
+    private javax.swing.JTextArea txt_msm_difun;
+    public static javax.swing.JTextField txt_nacimiento_difun;
+    public static javax.swing.JTextField txt_name_clien;
+    public static javax.swing.JTextField txt_name_difun;
+    public static javax.swing.JTextField txt_num_clien;
+    public static javax.swing.JTextField txt_typedocu_clien;
     // End of variables declaration//GEN-END:variables
 }
