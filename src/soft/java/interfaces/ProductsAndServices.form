@@ -181,7 +181,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txt_placa" min="-2" pref="237" max="-2" attributes="0"/>
+                  <Component id="txt_nombre_prod" min="-2" pref="237" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
@@ -190,7 +190,7 @@
                       <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txt_placa1" min="-2" pref="237" max="-2" attributes="0"/>
+                  <Component id="txt_estado_prod" min="-2" pref="237" max="-2" attributes="0"/>
                   <EmptySpace pref="317" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -205,10 +205,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txt_placa" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="txt_nombre_prod" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_placa1" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="txt_estado_prod" min="-2" pref="40" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -257,29 +257,29 @@
             <Property name="text" type="java.lang.String" value="Producto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa">
+        <Component class="javax.swing.JTextField" name="txt_nombre_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placaActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placaKeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_nombre_prodActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_nombre_prodKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa1">
+        <Component class="javax.swing.JTextField" name="txt_estado_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa1ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa1KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_estado_prodActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_estado_prodKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -313,8 +313,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jcb_vehiculo" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
-                              <Component id="jcb_vehiculo1" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="jcb_tipo_prod" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="jcb_tamaño_prod" alignment="0" min="-2" pref="218" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -323,8 +323,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jcb_vehiculo3" min="-2" pref="218" max="-2" attributes="0"/>
-                              <Component id="jcb_vehiculo2" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="jcb_estilo_prod" min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="jcb_categoria_prod" min="-2" pref="218" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -334,7 +334,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txt_placa2" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="txt_cantidad_prod" min="-2" pref="170" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -342,7 +342,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jcb_vehiculo5" min="-2" pref="199" max="-2" attributes="0"/>
+                                      <Component id="jcb_modo_pago" min="-2" pref="199" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -351,8 +351,8 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txt_placa4" max="32767" attributes="0"/>
-                                          <Component id="txt_placa5" max="32767" attributes="0"/>
+                                          <Component id="txt_total_pago" max="32767" attributes="0"/>
+                                          <Component id="txt_efectivo_pago" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -368,8 +368,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txt_placa6" max="32767" attributes="0"/>
-                                      <Component id="txt_placa3" pref="170" max="32767" attributes="0"/>
+                                      <Component id="txt_valor_serv" max="32767" attributes="0"/>
+                                      <Component id="txt_valor_prod" pref="170" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
@@ -396,24 +396,24 @@
                           <Component id="jLabel10" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jcb_vehiculo" alignment="3" max="32767" attributes="0"/>
-                          <Component id="jcb_vehiculo2" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jcb_tipo_prod" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jcb_categoria_prod" alignment="3" max="32767" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jcb_vehiculo1" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jcb_tamaño_prod" alignment="3" max="32767" attributes="0"/>
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jcb_vehiculo3" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jcb_estilo_prod" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="11" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_placa2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="txt_cantidad_prod" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -421,7 +421,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txt_placa3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="txt_valor_prod" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -429,7 +429,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_placa6" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="txt_valor_serv" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -443,16 +443,16 @@
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jcb_vehiculo5" alignment="3" max="32767" attributes="0"/>
+                              <Component id="jcb_modo_pago" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txt_placa4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_total_pago" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txt_placa5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_efectivo_pago" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -477,7 +477,7 @@
             <Property name="text" type="java.lang.String" value="Producto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_vehiculo">
+        <Component class="javax.swing.JComboBox" name="jcb_tipo_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="1"/>
@@ -493,7 +493,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_vehiculo1">
+        <Component class="javax.swing.JComboBox" name="jcb_tama&#xf1;o_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="1"/>
@@ -514,7 +514,7 @@
             <Property name="text" type="java.lang.String" value="Tama&#xf1;o"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_vehiculo2">
+        <Component class="javax.swing.JComboBox" name="jcb_categoria_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="1"/>
@@ -540,7 +540,7 @@
             <Property name="text" type="java.lang.String" value="Estilo"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_vehiculo3">
+        <Component class="javax.swing.JComboBox" name="jcb_estilo_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="1"/>
@@ -563,29 +563,29 @@
             <Property name="text" type="java.lang.String" value="Cantidad a comprar"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa2">
+        <Component class="javax.swing.JTextField" name="txt_cantidad_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa2ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa2KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_cantidad_prodActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_cantidad_prodKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa3">
+        <Component class="javax.swing.JTextField" name="txt_valor_prod">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa3ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa3KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_valor_prodActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_valor_prodKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -624,14 +624,14 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jcb_vehiculo4" min="-2" pref="221" max="-2" attributes="0"/>
+                              <Component id="jcb_servicio" min="-2" pref="221" max="-2" attributes="0"/>
                               <EmptySpace pref="15" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btn_ingreso" min="-2" pref="116" max="-2" attributes="0"/>
+                              <Component id="btn_añadir_serv" min="-2" pref="116" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btn_ingreso1" min="-2" pref="112" max="-2" attributes="0"/>
+                              <Component id="btn_cancelar_serv" min="-2" pref="112" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -643,12 +643,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn_ingreso1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_ingreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_cancelar_serv" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_añadir_serv" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="10" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jcb_vehiculo4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcb_servicio" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -657,7 +657,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btn_ingreso">
+            <Component class="javax.swing.JButton" name="btn_a&#xf1;adir_serv">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -686,10 +686,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ingresoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_a&#xf1;adir_servActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_ingreso1">
+            <Component class="javax.swing.JButton" name="btn_cancelar_serv">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -718,7 +718,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ingreso1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cancelar_servActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">
@@ -726,7 +726,7 @@
                 <Property name="text" type="java.lang.String" value="Servicio"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jcb_vehiculo4">
+            <Component class="javax.swing.JComboBox" name="jcb_servicio">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="1"/>
@@ -749,7 +749,7 @@
             <Property name="text" type="java.lang.String" value="Modo de pago"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcb_vehiculo5">
+        <Component class="javax.swing.JComboBox" name="jcb_modo_pago">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="14" style="1"/>
@@ -770,15 +770,15 @@
             <Property name="text" type="java.lang.String" value="Total pago"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa4">
+        <Component class="javax.swing.JTextField" name="txt_total_pago">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa4ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa4KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_total_pagoActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_total_pagoKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -789,15 +789,15 @@
             <Property name="text" type="java.lang.String" value="Efectivo"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa5">
+        <Component class="javax.swing.JTextField" name="txt_efectivo_pago">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa5ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa5KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_efectivo_pagoActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_efectivo_pagoKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -813,15 +813,15 @@
             <Property name="text" type="java.lang.String" value="Servicio"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_placa6">
+        <Component class="javax.swing.JTextField" name="txt_valor_serv">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa6ActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa6KeyTyped"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_valor_servActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_valor_servKeyTyped"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -852,8 +852,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txt_placa7" pref="195" max="32767" attributes="0"/>
-                          <Component id="txt_placa8" max="32767" attributes="0"/>
+                          <Component id="txt_cantidad_restant" pref="195" max="32767" attributes="0"/>
+                          <Component id="txt_cambio" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="128" max="32767" attributes="0"/>
                   </Group>
@@ -864,12 +864,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_placa7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_cantidad_restant" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_placa8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_cambio" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -888,29 +888,29 @@
                 <Property name="text" type="java.lang.String" value="Cambio devoluci&#xf3;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_placa8">
+            <Component class="javax.swing.JTextField" name="txt_cambio">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="18" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa8ActionPerformed"/>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa8KeyTyped"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_cambioActionPerformed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_cambioKeyTyped"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_placa7">
+            <Component class="javax.swing.JTextField" name="txt_cantidad_restant">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="18" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_placa7ActionPerformed"/>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_placa7KeyTyped"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_cantidad_restantActionPerformed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_cantidad_restantKeyTyped"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

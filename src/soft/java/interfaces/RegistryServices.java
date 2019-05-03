@@ -3,12 +3,18 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
+import soft.java.conection.MySQLConnection;
 
 
 public class RegistryServices extends javax.swing.JFrame {
 
     int x, y;
+    
+    // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
     
     public RegistryServices() {
         this.setUndecorated(true);
@@ -556,8 +562,8 @@ public class RegistryServices extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable table_tarifa;
     private javax.swing.JTextField txt_buscar;
-    private javax.swing.JTextField txt_placa;
-    private javax.swing.JTextField txt_placa6;
+    public static javax.swing.JTextField txt_placa;
+    public static javax.swing.JTextField txt_placa6;
     // End of variables declaration//GEN-END:variables
 
 }

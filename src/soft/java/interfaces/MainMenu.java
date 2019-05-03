@@ -3,7 +3,9 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
+import soft.java.conection.MySQLConnection;
 import soft.java.login.Login;
 
 
@@ -11,6 +13,10 @@ public class MainMenu extends javax.swing.JFrame {
 
      int x, y;
     
+     // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
+     
     public MainMenu() {
         this.setUndecorated(true);
         initComponents();
@@ -20,8 +26,7 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
 
-    
-    
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -854,7 +859,7 @@ public class MainMenu extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Cerrar sesión?", "Cerrar conexión" ,dialog);
         if (result == 0){
-           // conex.getDisconnectBD();
+            conex.getDisconnectBD();
             Login login = new Login();
             login.setVisible(true);
                 this.dispose();

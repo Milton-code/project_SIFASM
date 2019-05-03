@@ -3,12 +3,19 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
+import soft.java.conection.MySQLConnection;
 
 
 public class RegistryProducts extends javax.swing.JFrame {
 
     int x, y;
+    
+    // conector a la Base de datos
+    MySQLConnection conex = new MySQLConnection();
+    Connection con = conex.getConnectionBD();
+        
    
     public RegistryProducts() {
         this.setUndecorated(true);
