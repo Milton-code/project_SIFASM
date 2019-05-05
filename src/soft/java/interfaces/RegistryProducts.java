@@ -4,8 +4,19 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
+
+
 
 
 public class RegistryProducts extends javax.swing.JFrame {
@@ -23,8 +34,16 @@ public class RegistryProducts extends javax.swing.JFrame {
         setTitle("Registro Productos");
         this.setLocationRelativeTo(null);
         bloquear();
+        ShowTable();
     }
 
+    // Metodo para obtener la fecha del sistema
+    void getFecha(){
+       Date currentDate = new Date();
+        String dateFormat = "dd-MM-yyyy";
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            txt_date_produc.setText(String.format(format.format(currentDate), format));
+    }
     
     // Metodo para bloquear campos de texto y botones
     void bloquear(){
@@ -51,7 +70,6 @@ public class RegistryProducts extends javax.swing.JFrame {
         txt_type_produc.setEditable(true);
         txt_tamaño_produc.setEditable(true);
         txt_style_produc.setEditable(true);
-        txt_date_produc.setEditable(true);
         txt_price_produc.setEditable(true);
         txt_cantidad_produc.setEditable(true);
             btn_enable.setEnabled(false);
@@ -72,6 +90,49 @@ public class RegistryProducts extends javax.swing.JFrame {
         txt_date_produc.setText("");
         txt_price_produc.setText("");
         txt_cantidad_produc.setText("");
+        txt_buscar.setText("");
+    }
+    
+    
+    // Metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(){
+        DefaultTableModel modelo = new DefaultTableModel(); 
+            modelo.addColumn("Id producto");
+            modelo.addColumn("Nombre producto");
+            modelo.addColumn("Categoria");
+            modelo.addColumn("Tipo");
+            modelo.addColumn("Tamaño");
+            modelo.addColumn("Estilo");
+            modelo.addColumn("Fecha ingreso");
+            modelo.addColumn("Precio unitario");
+            modelo.addColumn("Cantidad disponible");
+            modelo.addColumn("Estado");
+                table_product.setModel(modelo);         
+            String sql = "SELECT id_inventario, nombre_producto, tipo_producto, categoria, tamaño_producto, estilo_producto, fecha_ingreso, precio_unitario, cantidad_disponible, estado FROM inventario;";
+            String datos[] = new String[10];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID producto*/
+                    datos[1] = rs.getString(2); /*Nombre producto*/
+                    datos[2] = rs.getString(3); /*Categoria*/
+                    datos[3] = rs.getString(4); /*Tipo*/
+                    datos[4] = rs.getString(5); /*Tamaño*/
+                    datos[5] = rs.getString(6); /*Estilo*/
+                    datos[6] = rs.getString(7); /*Fecha ingreso*/
+                    datos[7] = rs.getString(8); /*Precio unitario*/
+                    datos[8] = rs.getString(9); /*Cantidad disponible*/
+                    datos[9] = rs.getString(10); /*Estado*/
+                        modelo.addRow(datos);
+                }
+                 table_product.setModel(modelo);  
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
     }
     
     
@@ -122,7 +183,7 @@ public class RegistryProducts extends javax.swing.JFrame {
         btn_disable = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_product = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -482,19 +543,18 @@ public class RegistryProducts extends javax.swing.JFrame {
 
         jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 290, 60));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_product.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_product.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_product.setGridColor(new java.awt.Color(255, 255, 255));
+        table_product.setRowHeight(25);
+        jScrollPane1.setViewportView(table_product);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -755,28 +815,102 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_cantidad_producKeyTyped
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // Boton Guardar
+        // Boton Agregar
+        String StatedTrue = "Disponible";
+        // Registro para Tabla - Inventario
+        try {
+            PreparedStatement pps = con.prepareStatement("INSERT INTO inventario (nombre_producto, tipo_producto, categoria, tamaño_producto, estilo_producto, fecha_ingreso, precio_unitario, cantidad_disponible, estado) VALUES (?,?,?,?,?,?,?,?,?);");
+            pps.setString(1, txt_name_produc.getText());
+            pps.setString(2, txt_type_produc.getText());
+            pps.setString(3, txt_category_produc.getText());
+            pps.setString(4, txt_tamaño_produc.getText());
+            pps.setString(5, txt_style_produc.getText());
+            pps.setString(6, txt_date_produc.getText());
+            pps.setString(7, txt_price_produc.getText());
+            pps.setString(8, txt_cantidad_produc.getText());
+            pps.setString(9, StatedTrue);
+                pps.executeUpdate();
+                pps.close();
+                JOptionPane.showMessageDialog(null, "Datos Almacenados");
+                limpiar();
+                bloquear();
+                ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_modifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifiedActionPerformed
         // Boton Modificar
+        int fila = table_product.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_product.getValueAt(fila, 0).toString());
+            txt_name_produc.setText(table_product.getValueAt(fila, 1).toString());
+            txt_type_produc.setText(table_product.getValueAt(fila, 2).toString());
+            txt_category_produc.setText(table_product.getValueAt(fila, 3).toString());
+            txt_tamaño_produc.setText(table_product.getValueAt(fila, 4).toString());
+            txt_style_produc.setText(table_product.getValueAt(fila, 5).toString());
+            txt_date_produc.setText(table_product.getValueAt(fila, 6).toString());
+            txt_price_produc.setText(table_product.getValueAt(fila, 7).toString());
+            txt_cantidad_produc.setText(table_product.getValueAt(fila, 8).toString());
+            
+            btn_add.setEnabled(false);
+            btn_delete.setEnabled(false);
+            btn_modified.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
 
     }//GEN-LAST:event_btn_modifiedActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // Boton Actualizar
+        try {                                                                   
+            PreparedStatement pps = con.prepareStatement("UPDATE inventario SET nombre_producto='"+txt_name_produc.getText()+"',tipo_producto='"+txt_type_produc.getText()
+                +"',categoria='"+txt_category_produc.getText()+"',tamaño_producto='"+txt_tamaño_produc.getText()
+                +"',estilo_producto='"+txt_style_produc.getText()+"',fecha_ingreso='"+txt_date_produc.getText()
+                +"',precio_unitario='"+txt_price_produc.getText()+"',cantidad_disponible='"+txt_cantidad_produc.getText()
+                +"' WHERE id_inventario ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            limpiar();
+            ShowTable();
+            bloquear();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // Boton Eliminar
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Advertencia", dialog);
+        if (result == 0) {
+            int fila = table_product.getSelectedRow();
+            String valor = table_product.getValueAt(fila, 0).toString();
+            if(fila>=0){
+                try {
+                    PreparedStatement pps = con.prepareStatement("DELETE FROM inventario WHERE id_inventario='"+valor+"'");
+                    pps.executeUpdate();
+                    pps.close();
+                    JOptionPane.showMessageDialog(null, "Dato Eliminado");
+                    ShowTable();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegistryProducts.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+        }
 
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
         // Boton Enable
-        desbloquear();
+        // Captura la fecha
+       getFecha();
+       desbloquear();
     }//GEN-LAST:event_btn_enableActionPerformed
 
     private void btn_disableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_disableActionPerformed
@@ -855,7 +989,7 @@ public class RegistryProducts extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JTable table_product;
     private javax.swing.JTextField txt_buscar;
     public static javax.swing.JTextField txt_cantidad_produc;
     public static javax.swing.JTextField txt_category_produc;

@@ -560,7 +560,7 @@ public class RegistryServices extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Dato Eliminado");
                     ShowTable();
                 } catch (SQLException ex) {
-                    Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RegistryServices.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } 
         }
@@ -579,7 +579,7 @@ public class RegistryServices extends javax.swing.JFrame {
             ShowTable();
             bloquear();
         } catch (SQLException ex) {
-            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistryServices.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btn_updateActionPerformed
@@ -615,7 +615,7 @@ public class RegistryServices extends javax.swing.JFrame {
                 bloquear();
                 ShowTable();
         } catch (SQLException ex) {
-            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistryServices.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
