@@ -4,7 +4,14 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
 
 
@@ -23,6 +30,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
         setTitle("Matricula Difunto");
         this.setLocationRelativeTo(null);
         bloquear();
+        ShowTable();
     }
     
     // Metodo para bloquear campos de texto y botones
@@ -74,10 +82,51 @@ public class RegistryDifunto extends javax.swing.JFrame {
         txt_nacimiento_difun.setText("");
         txt_kill_difun.setText("");
         txt_msm_difun.setText("");
+        txt_buscar.setText("");
     }
     
 
-
+    // Metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(){
+        DefaultTableModel modelo = new DefaultTableModel(); 
+            modelo.addColumn("Id cliente");
+            modelo.addColumn("Nombre cliente");
+            modelo.addColumn("Apellido cliente");
+            modelo.addColumn("Tipo documento");
+            modelo.addColumn("Número documento");
+            modelo.addColumn("Nombre difunto");
+            modelo.addColumn("Apellido difunto");
+            modelo.addColumn("Fecha nacimiento");
+            modelo.addColumn("Fecha Fallecimiento");
+            modelo.addColumn("Mensaje");
+                table_client_difun.setModel(modelo);         
+            String sql = "SELECT id_cliente, nombre_cliente, apellido_cliente, tipo_documento, numero_documento, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, msm_recordatorio, estado_cliente FROM cliente_solicitante;";
+            String datos[] = new String[10];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Cliente*/
+                    datos[1] = rs.getString(2); /*Nombre cliente*/
+                    datos[2] = rs.getString(3); /*Apellido Cliente*/
+                    datos[3] = rs.getString(4); /*Tipo documento*/
+                    datos[4] = rs.getString(5); /*Numero documento*/
+                    datos[5] = rs.getString(6); /*Nombre difunto*/
+                    datos[6] = rs.getString(7); /*Apellido difunto*/
+                    datos[7] = rs.getString(8); /*Fecha nacimiento*/
+                    datos[8] = rs.getString(9); /*Fecha fallecimiento*/
+                    datos[9] = rs.getString(10); /*Mensaje*/
+                        modelo.addRow(datos);
+                }
+                 table_client_difun.setModel(modelo);  
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,7 +139,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_client_difun = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -222,19 +271,18 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 90, 660));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_client_difun.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_client_difun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_client_difun.setGridColor(new java.awt.Color(255, 255, 255));
+        table_client_difun.setRowHeight(25);
+        jScrollPane1.setViewportView(table_client_difun);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -632,10 +680,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_apellido_difun, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_apellido_difun, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                     .addComponent(txt_kill_difun))
-                .addGap(296, 296, 296))
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -738,21 +786,95 @@ public class RegistryDifunto extends javax.swing.JFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Guardar
         
+        // Registro para Tabla - Cliente solicitante
+        try {
+            PreparedStatement pps = con.prepareStatement("INSERT INTO cliente_solicitante (nombre_cliente, apellido_cliente, tipo_documento, numero_documento, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, msm_recordatorio) VALUES (?,?,?,?,?,?,?,?,?)");
+            pps.setString(1, txt_name_clien.getText());
+            pps.setString(2, txt_apellido_clien.getText());
+            pps.setString(3, txt_typedocu_clien.getText());
+            pps.setString(4, txt_num_clien.getText());
+            pps.setString(5, txt_name_difun.getText());
+            pps.setString(6, txt_apellido_difun.getText());
+            pps.setString(7, txt_nacimiento_difun.getText());
+            pps.setString(8, txt_kill_difun.getText());
+            pps.setString(9, txt_msm_difun.getText());
+                pps.executeUpdate();
+                pps.close();
+                JOptionPane.showMessageDialog(null, "Datos Almacenados");
+                limpiar();
+                bloquear();
+                ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_modifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifiedActionPerformed
         // Boton Modificar
+        int fila = table_client_difun.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_client_difun.getValueAt(fila, 0).toString());
+            txt_name_clien.setText(table_client_difun.getValueAt(fila, 1).toString());
+            txt_apellido_clien.setText(table_client_difun.getValueAt(fila, 2).toString());
+            txt_typedocu_clien.setText(table_client_difun.getValueAt(fila, 3).toString());
+            txt_num_clien.setText(table_client_difun.getValueAt(fila, 4).toString());
+            txt_name_difun.setText(table_client_difun.getValueAt(fila, 5).toString());
+            txt_apellido_difun.setText(table_client_difun.getValueAt(fila, 6).toString());
+            txt_nacimiento_difun.setText(table_client_difun.getValueAt(fila, 7).toString());
+            txt_kill_difun.setText(table_client_difun.getValueAt(fila, 8).toString());
+            txt_msm_difun.setText(table_client_difun.getValueAt(fila, 9).toString());
+            
+            
+            btn_add.setEnabled(false);
+            btn_delete.setEnabled(false);
+            btn_modified.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
         
     }//GEN-LAST:event_btn_modifiedActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // Boton Actualizar
+        try {                                                                   
+            PreparedStatement pps = con.prepareStatement("UPDATE cliente_solicitante SET nombre_cliente='"+txt_name_clien.getText()+"',apellido_cliente='"+txt_apellido_clien.getText()
+                +"',tipo_documento='"+txt_typedocu_clien.getText()+"',numero_documento='"+txt_num_clien.getText()
+                +"',nombre_difunto='"+txt_name_difun.getText()+"',apellido_difunto='"+txt_apellido_difun.getText()
+                +"',fecha_nacimiento='"+txt_nacimiento_difun.getText()+"',fecha_fallecimiento='"+txt_kill_difun.getText()
+                +"',msm_recordatorio='"+txt_msm_difun.getText()
+                +"' WHERE id_cliente ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            limpiar();
+            ShowTable();
+            bloquear();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // Boton Eliminar
-        
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Advertencia", dialog);
+        if (result == 0) {
+            int fila = table_client_difun.getSelectedRow();
+            String valor = table_client_difun.getValueAt(fila, 0).toString();
+            if(fila>=0){
+                try {
+                    PreparedStatement pps = con.prepareStatement("DELETE FROM cliente_solicitante WHERE id_cliente='"+valor+"'");
+                    pps.executeUpdate();
+                    pps.close();
+                    JOptionPane.showMessageDialog(null, "Dato Eliminado");
+                    ShowTable();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+        }
+
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_enableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enableActionPerformed
@@ -883,7 +1005,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JTable table_client_difun;
     public static javax.swing.JTextField txt_apellido_clien;
     public static javax.swing.JTextField txt_apellido_difun;
     private javax.swing.JTextField txt_buscar;
