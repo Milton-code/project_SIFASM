@@ -4,13 +4,21 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
 
 
 public class ClienteStatus extends javax.swing.JFrame {
 
     int x, y;
+    String searchAttribute = "id_cliente";
     
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -22,12 +30,14 @@ public class ClienteStatus extends javax.swing.JFrame {
         initComponents();
         setTitle("Estado del Cliente");
         this.setLocationRelativeTo(null);
+        ShowTable("");
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupSearch = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -36,14 +46,14 @@ public class ClienteStatus extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        rbt_placa = new javax.swing.JRadioButton();
-        rbt_vehiculo = new javax.swing.JRadioButton();
-        rbt_fecha = new javax.swing.JRadioButton();
+        rbt_cc = new javax.swing.JRadioButton();
+        rbt_deuda = new javax.swing.JRadioButton();
+        rbt_sinDeuda = new javax.swing.JRadioButton();
         btn_search = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_statusCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -140,24 +150,24 @@ public class ClienteStatus extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(239, 243, 246));
 
-        rbt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_placa.setText("Cedula cliente");
-        rbt_placa.addActionListener(new java.awt.event.ActionListener() {
+        rbt_cc.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_cc.setText("Cedula cliente");
+        rbt_cc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_placaActionPerformed(evt);
+                rbt_ccActionPerformed(evt);
             }
         });
 
-        rbt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_vehiculo.setText("Deuda cliente");
-        rbt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
+        rbt_deuda.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_deuda.setText("Deuda cliente");
+        rbt_deuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_vehiculoActionPerformed(evt);
+                rbt_deudaActionPerformed(evt);
             }
         });
 
-        rbt_fecha.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_fecha.setText("Sin deuda cliente");
+        rbt_sinDeuda.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_sinDeuda.setText("Sin deuda cliente");
 
         btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
@@ -183,11 +193,11 @@ public class ClienteStatus extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(rbt_placa)
+                .addComponent(rbt_cc)
                 .addGap(81, 81, 81)
-                .addComponent(rbt_vehiculo)
+                .addComponent(rbt_deuda)
                 .addGap(62, 62, 62)
-                .addComponent(rbt_fecha)
+                .addComponent(rbt_sinDeuda)
                 .addGap(125, 125, 125)
                 .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -199,9 +209,9 @@ public class ClienteStatus extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbt_placa)
-                    .addComponent(rbt_vehiculo)
-                    .addComponent(rbt_fecha)
+                    .addComponent(rbt_cc)
+                    .addComponent(rbt_deuda)
+                    .addComponent(rbt_sinDeuda)
                     .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -223,19 +233,18 @@ public class ClienteStatus extends javax.swing.JFrame {
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 1190, 260));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_statusCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_statusCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_statusCliente.setGridColor(new java.awt.Color(255, 255, 255));
+        table_statusCliente.setRowHeight(25);
+        jScrollPane1.setViewportView(table_statusCliente);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -259,6 +268,38 @@ public class ClienteStatus extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(String id_search){
+        DefaultTableModel modelo = new DefaultTableModel();       
+            modelo.addColumn("ID Cliente");
+            modelo.addColumn("Número documento");
+            modelo.addColumn("Estado deuda");
+                table_statusCliente.setModel(modelo);         
+            String sql = "";
+            if(id_search.equals("")){
+                sql = "SELECT id_cliente, numero_documento, estado_cliente FROM cliente_solicitante;";
+            }else{
+                sql = "SELECT id_cliente, numero_documento, estado_cliente FROM cliente_solicitante WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
+            }
+            String datos[] = new String[3];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Cliente*/
+                    datos[1] = rs.getString(2); /*Número documento*/
+                    datos[2] = rs.getString(3); /*Estado deuda*/
+                        modelo.addRow(datos);
+                }
+                 table_statusCliente.setModel(modelo);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // Boton volver
         MainMenu mainmenu = new MainMenu();
@@ -278,18 +319,41 @@ public class ClienteStatus extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void rbt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_vehiculoActionPerformed
+    private void rbt_deudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_deudaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_vehiculoActionPerformed
+    }//GEN-LAST:event_rbt_deudaActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // Boton Buscar
+       // Boton Buscar
+        buttonGroupSearch.add(rbt_cc);
+        buttonGroupSearch.add(rbt_deuda);
+        buttonGroupSearch.add(rbt_sinDeuda);
+        
+        if(rbt_cc.isSelected()){
+            txt_buscar.setEnabled(true);
+            searchAttribute = "numero_documento";
+            ShowTable(txt_buscar.getText());
+            txt_buscar.setText("");
+        }
+        else if(rbt_deuda.isSelected()){
+            txt_buscar.setEnabled(false);
+            txt_buscar.setText("Deuda");
+            searchAttribute = "estado_cliente";
+            ShowTable(txt_buscar.getText());
+        }
+        else if(rbt_sinDeuda.isSelected()){
+            txt_buscar.setEnabled(false);
+            txt_buscar.setText("Sin deuda");
+            searchAttribute = "estado_cliente";
+            ShowTable(txt_buscar.getText());
 
+        }
+        else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
 
-    private void rbt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_placaActionPerformed
+    private void rbt_ccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_ccActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_placaActionPerformed
+    }//GEN-LAST:event_rbt_ccActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // Mouse Pressed
@@ -340,6 +404,7 @@ public class ClienteStatus extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_search;
+    private javax.swing.ButtonGroup buttonGroupSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel6;
@@ -350,10 +415,10 @@ public class ClienteStatus extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbt_fecha;
-    private javax.swing.JRadioButton rbt_placa;
-    private javax.swing.JRadioButton rbt_vehiculo;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JRadioButton rbt_cc;
+    private javax.swing.JRadioButton rbt_deuda;
+    private javax.swing.JRadioButton rbt_sinDeuda;
+    private javax.swing.JTable table_statusCliente;
     private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables
 }
