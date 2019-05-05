@@ -4,13 +4,20 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
 
 
 public class ProductInventory extends javax.swing.JFrame {
 
-  int x, y;
+    int x, y;
+    String searchAttribute = "id_inventario";
   
   // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -22,7 +29,7 @@ public class ProductInventory extends javax.swing.JFrame {
         initComponents();
         setTitle("Producto Inventario");
         this.setLocationRelativeTo(null);
-       
+        ShowTable("");
     }
 
  
@@ -30,6 +37,7 @@ public class ProductInventory extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupSearch = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -38,14 +46,14 @@ public class ProductInventory extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        rbt_placa = new javax.swing.JRadioButton();
-        rbt_vehiculo = new javax.swing.JRadioButton();
+        rbt_nameProducts = new javax.swing.JRadioButton();
+        rbt_statusProducts = new javax.swing.JRadioButton();
         rbt_fecha = new javax.swing.JRadioButton();
         btn_search = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_products = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -142,19 +150,19 @@ public class ProductInventory extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(239, 243, 246));
 
-        rbt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_placa.setText("Nombre producto");
-        rbt_placa.addActionListener(new java.awt.event.ActionListener() {
+        rbt_nameProducts.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_nameProducts.setText("Nombre producto");
+        rbt_nameProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_placaActionPerformed(evt);
+                rbt_nameProductsActionPerformed(evt);
             }
         });
 
-        rbt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_vehiculo.setText("Estado producto");
-        rbt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
+        rbt_statusProducts.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_statusProducts.setText("Estado producto");
+        rbt_statusProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_vehiculoActionPerformed(evt);
+                rbt_statusProductsActionPerformed(evt);
             }
         });
 
@@ -185,9 +193,9 @@ public class ProductInventory extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(rbt_placa)
+                .addComponent(rbt_nameProducts)
                 .addGap(81, 81, 81)
-                .addComponent(rbt_vehiculo)
+                .addComponent(rbt_statusProducts)
                 .addGap(62, 62, 62)
                 .addComponent(rbt_fecha)
                 .addGap(125, 125, 125)
@@ -201,8 +209,8 @@ public class ProductInventory extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbt_placa)
-                    .addComponent(rbt_vehiculo)
+                    .addComponent(rbt_nameProducts)
+                    .addComponent(rbt_statusProducts)
                     .addComponent(rbt_fecha)
                     .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,19 +233,18 @@ public class ProductInventory extends javax.swing.JFrame {
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 1190, 260));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_products.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_products.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_products.setGridColor(new java.awt.Color(255, 255, 255));
+        table_products.setRowHeight(25);
+        jScrollPane1.setViewportView(table_products);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -261,6 +268,52 @@ public class ProductInventory extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(String id_search){
+        DefaultTableModel modelo = new DefaultTableModel();       
+            modelo.addColumn("ID Producto");
+            modelo.addColumn("Nombre producto");
+            modelo.addColumn("Tipo producto");
+            modelo.addColumn("Categoria producto");
+            modelo.addColumn("Tamaño producto");
+            modelo.addColumn("Estilo producto");
+            modelo.addColumn("Fecha Ingreso");
+            modelo.addColumn("Precio unitario");
+            modelo.addColumn("Cantidad disponible");
+            modelo.addColumn("Estado");
+                table_products.setModel(modelo);         
+            String sql = "";
+            if(id_search.equals("")){
+                sql = "SELECT id_inventario, nombre_producto, tipo_producto, categoria, tamaño_producto, estilo_producto, fecha_ingreso, precio_unitario, cantidad_disponible, estado FROM inventario;";
+            }else{
+                sql = "SELECT id_inventario, nombre_producto, tipo_producto, categoria, tamaño_producto, estilo_producto, fecha_ingreso, precio_unitario, cantidad_disponible, estado FROM inventario WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
+            }
+            String datos[] = new String[10];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Producto*/
+                    datos[1] = rs.getString(2); /*Nombre producto*/
+                    datos[2] = rs.getString(3); /*Tipo producto*/
+                    datos[3] = rs.getString(4); /*Categoria producto*/
+                    datos[4] = rs.getString(5); /*Tamaño producto*/
+                    datos[5] = rs.getString(6); /*Estilo producto*/
+                    datos[6] = rs.getString(7); /*Fecha Ingreso*/
+                    datos[7] = rs.getString(8); /*Precio unitario*/
+                    datos[8] = rs.getString(9); /*Cantidad disponible*/
+                    datos[9] = rs.getString(10); /*Estado*/
+                        modelo.addRow(datos);
+                }
+                 table_products.setModel(modelo);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir", dialog);
@@ -292,16 +345,27 @@ public class ProductInventory extends javax.swing.JFrame {
         this.setLocation(p.x - x, p.y - y);
     }//GEN-LAST:event_formMouseDragged
 
-    private void rbt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_placaActionPerformed
+    private void rbt_nameProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_nameProductsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_placaActionPerformed
+    }//GEN-LAST:event_rbt_nameProductsActionPerformed
 
-    private void rbt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_vehiculoActionPerformed
+    private void rbt_statusProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_statusProductsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_vehiculoActionPerformed
+    }//GEN-LAST:event_rbt_statusProductsActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // Boton Buscar
+        buttonGroupSearch.add(rbt_nameProducts);
+        buttonGroupSearch.add(rbt_statusProducts);
+        buttonGroupSearch.add(rbt_fecha);
+
+        if(rbt_nameProducts.isSelected()){
+            searchAttribute = "nombre_producto";
+            ShowTable(txt_buscar.getText());
+        }
+        else if(rbt_fecha.isSelected()){searchAttribute = "fecha_ingreso"; ShowTable(txt_buscar.getText());}
+        else if(rbt_statusProducts.isSelected()){searchAttribute = "estado"; ShowTable(txt_buscar.getText());}
+        else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
 
     /**
@@ -341,6 +405,7 @@ public class ProductInventory extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_search;
+    private javax.swing.ButtonGroup buttonGroupSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel6;
@@ -352,9 +417,9 @@ public class ProductInventory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rbt_fecha;
-    private javax.swing.JRadioButton rbt_placa;
-    private javax.swing.JRadioButton rbt_vehiculo;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JRadioButton rbt_nameProducts;
+    private javax.swing.JRadioButton rbt_statusProducts;
+    private javax.swing.JTable table_products;
     private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables
 }
