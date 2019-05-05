@@ -4,13 +4,21 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
 
 
 public class ConsultDebt extends javax.swing.JFrame {
 
     int x, y;
+    String searchAttribute = "id_cliente";
     
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -22,6 +30,58 @@ public class ConsultDebt extends javax.swing.JFrame {
         initComponents();
         setTitle("Consulta Deuda");
         this.setLocationRelativeTo(null);
+        ShowTable("");
+    }
+    
+    // metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(String id_search){
+        DefaultTableModel modelo = new DefaultTableModel();       
+            modelo.addColumn("ID Cliente");
+            modelo.addColumn("Nombre cliente");
+            modelo.addColumn("Apellido cliente");
+            modelo.addColumn("Tipo documento");
+            modelo.addColumn("Número documento");
+            modelo.addColumn("Nombre difunto");
+            modelo.addColumn("Apellido difunto");
+            modelo.addColumn("Fecha nacimiento");
+            modelo.addColumn("Fecha fallecimiento");
+            modelo.addColumn("Estado cliente");
+                table_deuda.setModel(modelo);         
+            String sql = "";
+            if(id_search.equals("")){
+                sql = "SELECT id_cliente, nombre_cliente, apellido_cliente, tipo_documento, numero_documento, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, estado_cliente FROM cliente_solicitante;";
+            }else{
+                sql = "SELECT id_cliente, nombre_cliente, apellido_cliente, tipo_documento, numero_documento, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, estado_cliente FROM cliente_solicitante WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
+            }
+    
+            String datos[] = new String[10];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Cliente*/
+                    datos[1] = rs.getString(2); /*Nombre cliente*/
+                    datos[2] = rs.getString(3); /*Apellido cliente*/
+                    datos[3] = rs.getString(4); /*Tipo documento*/
+                    datos[4] = rs.getString(5); /*Numero documento*/
+                    datos[5] = rs.getString(6); /*Nombre difunto*/
+                    datos[6] = rs.getString(7); /*Apellido difunto*/
+                    datos[7] = rs.getString(8); /*Fecha nacimiento*/
+                    datos[8] = rs.getString(9); /*Fecha fallecimiento*/
+                    datos[9] = rs.getString(10); /*Estado cliente*/
+                        modelo.addRow(datos);
+                }
+                 table_deuda.setModel(modelo);
+                 TableColumnModel columnModel = table_deuda.getColumnModel();
+                    columnModel.getColumn(0).setPreferredWidth(40);
+                    columnModel.getColumn(3).setPreferredWidth(70);
+                    columnModel.getColumn(4).setPreferredWidth(70);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultDebt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
     }
 
 
@@ -29,6 +89,7 @@ public class ConsultDebt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupSearch = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -37,12 +98,12 @@ public class ConsultDebt extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_deuda = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        rbt_placa = new javax.swing.JRadioButton();
-        rbt_vehiculo = new javax.swing.JRadioButton();
-        rbt_fecha = new javax.swing.JRadioButton();
+        rbt_nameCliente = new javax.swing.JRadioButton();
+        rbt_estadoCliente = new javax.swing.JRadioButton();
+        rbt_nameDifunto = new javax.swing.JRadioButton();
         btn_search = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
 
@@ -138,19 +199,18 @@ public class ConsultDebt extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 60));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_deuda.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_deuda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_deuda.setGridColor(new java.awt.Color(255, 255, 255));
+        table_deuda.setRowHeight(25);
+        jScrollPane1.setViewportView(table_deuda);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,19 +235,19 @@ public class ConsultDebt extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(239, 243, 246));
 
-        rbt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_placa.setText("Nombre cliente");
+        rbt_nameCliente.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_nameCliente.setText("Nombre cliente");
 
-        rbt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_vehiculo.setText("Estado cliente");
-        rbt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
+        rbt_estadoCliente.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_estadoCliente.setText("Estado cliente");
+        rbt_estadoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_vehiculoActionPerformed(evt);
+                rbt_estadoClienteActionPerformed(evt);
             }
         });
 
-        rbt_fecha.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_fecha.setText("Persona matriculada");
+        rbt_nameDifunto.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_nameDifunto.setText("Persona matriculada");
 
         btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
@@ -213,11 +273,11 @@ public class ConsultDebt extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(rbt_placa)
+                .addComponent(rbt_nameCliente)
                 .addGap(81, 81, 81)
-                .addComponent(rbt_vehiculo)
+                .addComponent(rbt_estadoCliente)
                 .addGap(62, 62, 62)
-                .addComponent(rbt_fecha)
+                .addComponent(rbt_nameDifunto)
                 .addGap(125, 125, 125)
                 .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -229,9 +289,9 @@ public class ConsultDebt extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbt_placa)
-                    .addComponent(rbt_vehiculo)
-                    .addComponent(rbt_fecha)
+                    .addComponent(rbt_nameCliente)
+                    .addComponent(rbt_estadoCliente)
+                    .addComponent(rbt_nameDifunto)
                     .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -289,12 +349,22 @@ public class ConsultDebt extends javax.swing.JFrame {
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // Boton Buscar
-       
+        buttonGroupSearch.add(rbt_nameCliente);
+        buttonGroupSearch.add(rbt_estadoCliente);
+        buttonGroupSearch.add(rbt_nameDifunto);
+
+        if(rbt_nameCliente.isSelected()){
+            searchAttribute = "nombre_cliente";
+            ShowTable(txt_buscar.getText());
+        }
+        else if(rbt_estadoCliente.isSelected()){searchAttribute = "estado_cliente"; ShowTable(txt_buscar.getText());}
+        else if(rbt_nameDifunto.isSelected()){searchAttribute = "nombre_difunto"; ShowTable(txt_buscar.getText());}
+        else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
 
-    private void rbt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_vehiculoActionPerformed
+    private void rbt_estadoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_estadoClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_vehiculoActionPerformed
+    }//GEN-LAST:event_rbt_estadoClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,6 +403,7 @@ public class ConsultDebt extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_search;
+    private javax.swing.ButtonGroup buttonGroupSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel6;
@@ -343,10 +414,10 @@ public class ConsultDebt extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbt_fecha;
-    private javax.swing.JRadioButton rbt_placa;
-    private javax.swing.JRadioButton rbt_vehiculo;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JRadioButton rbt_estadoCliente;
+    private javax.swing.JRadioButton rbt_nameCliente;
+    private javax.swing.JRadioButton rbt_nameDifunto;
+    private javax.swing.JTable table_deuda;
     private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables
 }
