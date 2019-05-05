@@ -4,8 +4,17 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import soft.java.conection.MySQLConnection;
+
 
 
 public class RegistryServices extends javax.swing.JFrame {
@@ -22,6 +31,7 @@ public class RegistryServices extends javax.swing.JFrame {
         setTitle("Registro Servicios");
         this.setLocationRelativeTo(null);
         bloquear();
+        ShowTable();
     }
 
     
@@ -56,10 +66,45 @@ public class RegistryServices extends javax.swing.JFrame {
         txt_nombre_serv.setText("");
         txa_descipcion_serv.setText("");
         txt_precio_serv.setText("");
+        txt_buscar.setText("");
     }
     
     
-  
+    // Metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(){
+        DefaultTableModel modelo = new DefaultTableModel(); 
+            modelo.addColumn("Id servicio");
+            modelo.addColumn("Nombre servicio");
+            modelo.addColumn("Descripcion servicio");
+            modelo.addColumn("Precio del servicio");
+                table_services.setModel(modelo);         
+            String sql = "SELECT id_servicio, nombre_servicio, descripcion_servicio, precio_servicio FROM servicios;";
+            String datos[] = new String[4];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Servicio*/
+                    datos[1] = rs.getString(2); /*Nombre servicio*/
+                    datos[2] = rs.getString(3); /*Descripcion servicio*/
+                    datos[3] = rs.getString(4); /*Precio del servicio*/
+                        modelo.addRow(datos);
+                }
+                 table_services.setModel(modelo);
+                 TableColumnModel columnModel = table_services.getColumnModel();
+                    columnModel.getColumn(0).setPreferredWidth(20);
+                    columnModel.getColumn(1).setPreferredWidth(50);
+                    columnModel.getColumn(2).setPreferredWidth(50);
+                    columnModel.getColumn(3).setPreferredWidth(50);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,7 +136,7 @@ public class RegistryServices extends javax.swing.JFrame {
         btn_disable = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_services = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txa_descipcion_serv = new javax.swing.JTextArea();
 
@@ -361,19 +406,18 @@ public class RegistryServices extends javax.swing.JFrame {
 
         jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 290, 60));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_services.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_services.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_services.setGridColor(new java.awt.Color(255, 255, 255));
+        table_services.setRowHeight(25);
+        jScrollPane1.setViewportView(table_services);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -503,18 +547,76 @@ public class RegistryServices extends javax.swing.JFrame {
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // Boton Eliminar
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Advertencia", dialog);
+        if (result == 0) {
+            int fila = table_services.getSelectedRow();
+            String valor = table_services.getValueAt(fila, 0).toString();
+            if(fila>=0){
+                try {
+                    PreparedStatement pps = con.prepareStatement("DELETE FROM servicios WHERE id_servicio='"+valor+"'");
+                    pps.executeUpdate();
+                    pps.close();
+                    JOptionPane.showMessageDialog(null, "Dato Eliminado");
+                    ShowTable();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+        }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // Boton Actualizar
+         try {                                                                   
+            PreparedStatement pps = con.prepareStatement("UPDATE servicios SET nombre_servicio='"+txt_nombre_serv.getText()+"',descripcion_servicio='"+txa_descipcion_serv.getText()
+                +"',precio_servicio='"+txt_precio_serv.getText()
+                +"' WHERE id_servicio ='"+txt_buscar.getText()+"'");
+            pps.executeUpdate();
+            pps.close();
+            JOptionPane.showMessageDialog(null, "Datos Actualizados");
+            limpiar();
+            ShowTable();
+            bloquear();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_modifiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifiedActionPerformed
         // Boton Modificar
+        int fila = table_services.getSelectedRow();
+        if(fila>=0){
+            txt_buscar.setText(table_services.getValueAt(fila, 0).toString());
+            txt_nombre_serv.setText(table_services.getValueAt(fila, 1).toString());
+            txa_descipcion_serv.setText(table_services.getValueAt(fila, 2).toString());
+            txt_precio_serv.setText(table_services.getValueAt(fila, 3).toString());
+            btn_add.setEnabled(false);
+            btn_delete.setEnabled(false);
+            btn_modified.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(null, "Fila no seleccionada");
+        }
     }//GEN-LAST:event_btn_modifiedActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Guardar
+        // Registro para Tabla - Servicio
+        try {
+            PreparedStatement pps = con.prepareStatement("INSERT INTO servicios (nombre_servicio, descripcion_servicio, precio_servicio) VALUES (?,?,?)");
+            pps.setString(1, txt_nombre_serv.getText());
+            pps.setString(2, txa_descipcion_serv.getText());
+            pps.setString(3, txt_precio_serv.getText());
+                pps.executeUpdate();
+                pps.close();
+                JOptionPane.showMessageDialog(null, "Datos Almacenados");
+                limpiar();
+                bloquear();
+                ShowTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(RegistryDifunto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void txt_precio_servKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precio_servKeyTyped
@@ -598,7 +700,7 @@ public class RegistryServices extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JTable table_services;
     private javax.swing.JTextArea txa_descipcion_serv;
     private javax.swing.JTextField txt_buscar;
     public static javax.swing.JTextField txt_nombre_serv;
