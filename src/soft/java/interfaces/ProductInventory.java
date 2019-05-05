@@ -186,6 +186,11 @@ public class ProductInventory extends javax.swing.JFrame {
         });
 
         txt_buscar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -367,6 +372,10 @@ public class ProductInventory extends javax.swing.JFrame {
         else if(rbt_statusProducts.isSelected()){searchAttribute = "estado"; ShowTable(txt_buscar.getText());}
         else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_buscarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,12 +4,19 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
 
 public class ConsultSales extends javax.swing.JFrame {
 
     int x, y;
+    String searchAttribute = "id_caja";
     
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -21,6 +28,7 @@ public class ConsultSales extends javax.swing.JFrame {
         initComponents();
         setTitle("Registro de ventas");
         this.setLocationRelativeTo(null);
+        ShowTable("");
     }
 
   
@@ -28,6 +36,7 @@ public class ConsultSales extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupSearch = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -36,14 +45,14 @@ public class ConsultSales extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        rbt_placa = new javax.swing.JRadioButton();
-        rbt_vehiculo = new javax.swing.JRadioButton();
-        rbt_fecha = new javax.swing.JRadioButton();
+        rbt_nameProducts = new javax.swing.JRadioButton();
+        rbt_dateIngreso = new javax.swing.JRadioButton();
+        rbt_dateSalida = new javax.swing.JRadioButton();
         btn_search = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_tarifa = new javax.swing.JTable();
+        table_sales = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -140,24 +149,24 @@ public class ConsultSales extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(239, 243, 246));
 
-        rbt_placa.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_placa.setText("Total venta");
-        rbt_placa.addActionListener(new java.awt.event.ActionListener() {
+        rbt_nameProducts.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_nameProducts.setText("Nombre venta producto");
+        rbt_nameProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_placaActionPerformed(evt);
+                rbt_nameProductsActionPerformed(evt);
             }
         });
 
-        rbt_vehiculo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_vehiculo.setText("Fecha ingreso");
-        rbt_vehiculo.addActionListener(new java.awt.event.ActionListener() {
+        rbt_dateIngreso.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_dateIngreso.setText("Fecha ingreso");
+        rbt_dateIngreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_vehiculoActionPerformed(evt);
+                rbt_dateIngresoActionPerformed(evt);
             }
         });
 
-        rbt_fecha.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_fecha.setText("Fecha salida");
+        rbt_dateSalida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        rbt_dateSalida.setText("Fecha salida");
 
         btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
@@ -183,12 +192,12 @@ public class ConsultSales extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(rbt_placa)
-                .addGap(93, 93, 93)
-                .addComponent(rbt_vehiculo)
-                .addGap(80, 80, 80)
-                .addComponent(rbt_fecha)
-                .addGap(101, 101, 101)
+                .addComponent(rbt_nameProducts)
+                .addGap(69, 69, 69)
+                .addComponent(rbt_dateIngreso)
+                .addGap(71, 71, 71)
+                .addComponent(rbt_dateSalida)
+                .addGap(89, 89, 89)
                 .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,9 +208,9 @@ public class ConsultSales extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbt_placa)
-                    .addComponent(rbt_vehiculo)
-                    .addComponent(rbt_fecha)
+                    .addComponent(rbt_nameProducts)
+                    .addComponent(rbt_dateIngreso)
+                    .addComponent(rbt_dateSalida)
                     .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -223,19 +232,18 @@ public class ConsultSales extends javax.swing.JFrame {
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 1190, 260));
 
-        table_tarifa.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        table_tarifa.setModel(new javax.swing.table.DefaultTableModel(
+        table_sales.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        table_sales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2"
+
             }
         ));
-        table_tarifa.setGridColor(new java.awt.Color(255, 255, 255));
-        table_tarifa.setRowHeight(25);
-        jScrollPane1.setViewportView(table_tarifa);
+        table_sales.setGridColor(new java.awt.Color(255, 255, 255));
+        table_sales.setRowHeight(25);
+        jScrollPane1.setViewportView(table_sales);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -259,6 +267,54 @@ public class ConsultSales extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // metodo para mostrar la tabla de la Base Datos 
+    void ShowTable(String id_search){
+        DefaultTableModel modelo = new DefaultTableModel();       
+            modelo.addColumn("ID Producto");
+            modelo.addColumn("Nombre producto");
+            modelo.addColumn("Cantidad compra");
+            modelo.addColumn("Modo pago");
+            modelo.addColumn("Efectivo");
+            modelo.addColumn("Fecha ingreso");
+            modelo.addColumn("Fecha salida");
+            modelo.addColumn("Cantidad restante");
+            modelo.addColumn("Total pago");
+            modelo.addColumn("Cantidad disponible");
+            modelo.addColumn("Estado");
+                table_sales.setModel(modelo);         
+            String sql = "";
+            if(id_search.equals("")){
+                sql = "SELECT id_caja, nombre_prod_caja, cantidad_compra, modo_pago, efectivo, fecha_ingreso, fecha_salida, cantidad_restante, total_pago, cantidad_disponible, estado FROM caja INNER JOIN inventario ON caja.id_inventario1 = inventario.id_inventario;";
+            }else{
+                sql = "SELECT id_caja, nombre_prod_caja, cantidad_compra, modo_pago, efectivo, fecha_ingreso, fecha_salida, cantidad_restante, total_pago, cantidad_disponible, estado FROM caja INNER JOIN inventario ON caja.id_inventario1 = inventario.id_inventario WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
+            }
+            String datos[] = new String[11];
+            Statement st;
+        try {
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+                while (rs.next()){
+                    datos[0] = rs.getString(1); /*ID Producto*/
+                    datos[1] = rs.getString(2); /*Nombre producto*/
+                    datos[2] = rs.getString(3); /*Cantidad compra*/
+                    datos[3] = rs.getString(4); /*Modo pago*/
+                    datos[4] = rs.getString(5); /*Efectivo*/
+                    datos[5] = rs.getString(6); /*Fecha ingreso*/
+                    datos[6] = rs.getString(7); /*Fecha salida*/
+                    datos[7] = rs.getString(8); /*Cantidad restante*/
+                    datos[8] = rs.getString(9); /*Total pago*/
+                    datos[9] = rs.getString(10); /*Cantidad disponible*/
+                    datos[10] = rs.getString(11); /*Estado*/
+                        modelo.addRow(datos);
+                }
+                 table_sales.setModel(modelo);
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultSales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }
+    
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir", dialog);
@@ -278,16 +334,27 @@ public class ConsultSales extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void rbt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_placaActionPerformed
+    private void rbt_nameProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_nameProductsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_placaActionPerformed
+    }//GEN-LAST:event_rbt_nameProductsActionPerformed
 
-    private void rbt_vehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_vehiculoActionPerformed
+    private void rbt_dateIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_dateIngresoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_vehiculoActionPerformed
+    }//GEN-LAST:event_rbt_dateIngresoActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // Boton Buscar
+        buttonGroupSearch.add(rbt_nameProducts);
+        buttonGroupSearch.add(rbt_dateIngreso);
+        buttonGroupSearch.add(rbt_dateSalida);
+
+        if(rbt_nameProducts.isSelected()){
+            searchAttribute = "nombre_prod_caja";
+            ShowTable(txt_buscar.getText());
+        }
+        else if(rbt_dateIngreso.isSelected()){searchAttribute = "fecha_ingreso"; ShowTable(txt_buscar.getText());}
+        else if(rbt_dateSalida.isSelected()){searchAttribute = "fecha_salida"; ShowTable(txt_buscar.getText());}
+        else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -339,6 +406,7 @@ public class ConsultSales extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_search;
+    private javax.swing.ButtonGroup buttonGroupSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel6;
@@ -349,10 +417,10 @@ public class ConsultSales extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbt_fecha;
-    private javax.swing.JRadioButton rbt_placa;
-    private javax.swing.JRadioButton rbt_vehiculo;
-    private javax.swing.JTable table_tarifa;
+    private javax.swing.JRadioButton rbt_dateIngreso;
+    private javax.swing.JRadioButton rbt_dateSalida;
+    private javax.swing.JRadioButton rbt_nameProducts;
+    private javax.swing.JTable table_sales;
     private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables
 }

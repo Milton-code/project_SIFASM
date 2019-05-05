@@ -313,6 +313,16 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(239, 243, 246));
         jPanel10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel10.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel10MouseMoved(evt);
+            }
+        });
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel10MouseExited(evt);
+            }
+        });
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/soft/java/files/libro24px.png"))); // NOI18N
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -865,6 +875,15 @@ public class MainMenu extends javax.swing.JFrame {
                 this.dispose();
         }
     }//GEN-LAST:event_btn_closeSesionMouseClicked
+
+    private void jPanel10MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseMoved
+
+    }//GEN-LAST:event_jPanel10MouseMoved
+
+    private void jPanel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseExited
+       
+       
+    }//GEN-LAST:event_jPanel10MouseExited
 
     /**
      * @param args the command line arguments
