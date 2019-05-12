@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS inventario (
     fecha_ingreso VARCHAR(10) NOT NULL,
     precio_unitario FLOAT NOT NULL,
     cantidad_disponible INT NOT NULL,
-    estado VARCHAR(10) NOT NULL,
+    estado VARCHAR(15) NOT NULL,
     PRIMARY KEY (id_inventario)
 );
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS caja (
     estilo_prod_caja VARCHAR(50),
     cantidad_compra INT NOT NULL,
     tipo_servicio VARCHAR(50),
-    modo_pago VARCHAR(10),
+    modo_pago VARCHAR(15),
     total_pago FLOAT,
     efectivo FLOAT,
     cambio FLOAT,

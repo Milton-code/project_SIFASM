@@ -866,11 +866,12 @@ public class RegistryProducts extends javax.swing.JFrame {
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // Boton Actualizar
+        String StatedTrue = "Disponible";
         try {                                                                   
             PreparedStatement pps = con.prepareStatement("UPDATE inventario SET nombre_producto='"+txt_name_produc.getText()+"',tipo_producto='"+txt_type_produc.getText()
                 +"',categoria='"+txt_category_produc.getText()+"',tamaño_producto='"+txt_tamaño_produc.getText()
                 +"',estilo_producto='"+txt_style_produc.getText()+"',fecha_ingreso='"+txt_date_produc.getText()
-                +"',precio_unitario='"+txt_price_produc.getText()+"',cantidad_disponible='"+txt_cantidad_produc.getText()
+                +"',precio_unitario='"+txt_price_produc.getText()+"',cantidad_disponible='"+txt_cantidad_produc.getText()+"',estado='"+StatedTrue
                 +"' WHERE id_inventario ='"+txt_buscar.getText()+"'");
             pps.executeUpdate();
             pps.close();

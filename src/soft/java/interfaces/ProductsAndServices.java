@@ -4,13 +4,25 @@ package soft.java.interfaces;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import soft.java.conection.MySQLConnection;
+import static soft.java.interfaces.RegistryProducts.txt_date_produc;
 
 
 public class ProductsAndServices extends javax.swing.JFrame {
 
-    int x, y;
+    int x, y, valuedPay = 0, cashPay = 0, totalPago = 0;
+    String cantidad_disponible, selectedPay = "", currentOutDate = "";
     
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
@@ -22,6 +34,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
         initComponents();
         setTitle("Productos y Servicios");
         this.setLocationRelativeTo(null);
+
         bloquear();
     }
         
@@ -34,19 +47,23 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jcb_categoria_prod.setEditable(false);
         jcb_tamaño_prod.setEditable(false);
         jcb_estilo_prod.setEditable(false);        
-        txt_cantidad_prod.setEditable(false);        
+        txt_cantidad_prod.setEditable(false);
+        txt_product_dispo.setEditable(false);        
         txt_valor_prod.setEditable(false);
         txt_valor_serv.setEditable(false);
         jcb_servicio.setEditable(false);
+        jcb_servicio.setEnabled(false);
         jcb_modo_pago.setEditable(false);
         txt_total_pago.setEditable(false);
         txt_efectivo_pago.setEditable(false);
         txt_cantidad_restant.setEditable(false);
         txt_cambio.setEditable(false);
+        jcb_modo_pago.setEditable(false);
             btn_venta.setEnabled(true);
             btn_cancelar.setEnabled(false);
             btn_liquidacion.setEnabled(false); 
-            btn_añadir_serv.setEnabled(false);
+            btn_habilited.setEnabled(false);
+            btn_añadir_serv.setEnabled(false); 
             btn_cancelar_serv.setEnabled(false); 
     }
 
@@ -54,10 +71,10 @@ public class ProductsAndServices extends javax.swing.JFrame {
     void desbloquear(){
         txt_nombre_prod.setEditable(true);
         txt_estado_prod.setEditable(false);
-        jcb_tipo_prod.setEditable(true);
-        jcb_categoria_prod.setEditable(true);
-        jcb_tamaño_prod.setEditable(true);
-        jcb_estilo_prod.setEditable(true);        
+        jcb_tipo_prod.setEditable(false);
+        jcb_categoria_prod.setEditable(false);
+        jcb_tamaño_prod.setEditable(false);
+        jcb_estilo_prod.setEditable(false);        
         txt_cantidad_prod.setEditable(true);        
         txt_valor_prod.setEditable(false);
         txt_valor_serv.setEditable(false);
@@ -67,10 +84,11 @@ public class ProductsAndServices extends javax.swing.JFrame {
         txt_efectivo_pago.setEditable(true);
         txt_cantidad_restant.setEditable(false);
         txt_cambio.setEditable(false);
+        jcb_modo_pago.setEditable(false);
             btn_venta.setEnabled(false);
             btn_cancelar.setEnabled(true);
             btn_liquidacion.setEnabled(true); 
-            btn_añadir_serv.setEnabled(true);
+            btn_habilited.setEnabled(true);
             btn_cancelar_serv.setEnabled(false); 
     }
  
@@ -78,15 +96,86 @@ public class ProductsAndServices extends javax.swing.JFrame {
         txt_nombre_prod.setText("");
         txt_estado_prod.setText("");
         txt_cantidad_prod.setText("");
+        jcb_tipo_prod.setText("");
+        jcb_categoria_prod.setText("");
+        jcb_tamaño_prod.setText("");
+        jcb_estilo_prod.setText("");
         txt_valor_prod.setText("");
         txt_valor_serv.setText("");
         txt_total_pago.setText("");
         txt_cantidad_restant.setText("");
         txt_cambio.setText("");
         txt_efectivo_pago.setText("");
+        txt_product_dispo.setText("");
+        jcb_modo_pago.removeAllItems();
+        jcb_servicio.removeAllItems();
     }
     
+    // Metodo para obtener la fecha del sistema
+    void getFecha(){
+        Date currentDate = new Date();        
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            this.currentOutDate = dateFormat.format(currentDate);
+    }
     
+    // Metodo para obtener datos 'tipo servicios' de la base datos
+    void getServices(){  
+        try {
+            String sql = "SELECT DISTINCT nombre_servicio FROM servicios";
+            PreparedStatement pps = con.prepareStatement(sql);
+            ResultSet rs = pps.executeQuery(sql);
+                jcb_servicio.addItem("Seleccione servicio");
+            while(rs.next()){
+                jcb_servicio.addItem(rs.getString("nombre_servicio"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay resultado");
+        } 
+    }
+    
+  
+    // Metodo para obtener el precio del servicio
+    void getPriceServices(){
+
+        // Obtiene el valor de campo lista
+        String selectedService = jcb_servicio.getSelectedItem().toString();
+        String priceService = "";
+
+        try {
+            // Consulta en la BD
+            Statement stat = con.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT precio_servicio FROM servicios WHERE nombre_servicio = '"+selectedService+"'");
+            rs.first();
+            // Selecciona los atributos deacuerdo a la posicion de la consulta sql
+            priceService = rs.getString(1);
+            // Parsea el valor String a Entero
+            Integer servicePrice = Integer.parseInt(priceService);
+            
+            if (!selectedService.equals("Seleccione servicio")) {
+                // Suma: Precio servicio + Valor total
+                int payMoreService = totalPago + servicePrice;
+                String serviceMorePay = Integer.toString(payMoreService);
+                
+                txt_valor_serv.setText(priceService);
+                txt_total_pago.setText(serviceMorePay);
+                
+                rs.close();
+            }
+
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio");
+        } 
+    }
+    
+    // Metodo para modo de pago
+    void modePay(){  
+        jcb_modo_pago.addItem("Seleccione modo de pago");
+        jcb_modo_pago.addItem("Por cuota");
+        jcb_modo_pago.addItem("Venta directa");
+    }
+ 
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -109,24 +198,20 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jcb_tipo_prod = new javax.swing.JComboBox<>();
-        jcb_tamaño_prod = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jcb_categoria_prod = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jcb_estilo_prod = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
         txt_cantidad_prod = new javax.swing.JTextField();
         txt_valor_prod = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        btn_añadir_serv = new javax.swing.JButton();
+        btn_habilited = new javax.swing.JButton();
         btn_cancelar_serv = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jcb_servicio = new javax.swing.JComboBox<>();
+        btn_añadir_serv = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jcb_modo_pago = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
@@ -141,6 +226,15 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txt_cambio = new javax.swing.JTextField();
         txt_cantidad_restant = new javax.swing.JTextField();
+        jcb_tipo_prod = new javax.swing.JTextField();
+        jcb_tamaño_prod = new javax.swing.JTextField();
+        jcb_categoria_prod = new javax.swing.JTextField();
+        jcb_estilo_prod = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        txt_product_dispo = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btn_liquidacion = new javax.swing.JButton();
@@ -247,6 +341,11 @@ public class ProductsAndServices extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/soft/java/files/search32px.png"))); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         jLabel5.setText("Estado del");
 
@@ -287,9 +386,9 @@ public class ProductsAndServices extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(txt_nombre_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addGap(96, 96, 96)
+                .addGap(87, 87, 87)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel5))
@@ -306,17 +405,16 @@ public class ProductsAndServices extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_nombre_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_estado_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel4)))
-                        .addGap(3, 3, 3)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(3, 3, 3))
+                    .addComponent(txt_nombre_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -328,25 +426,11 @@ public class ProductsAndServices extends javax.swing.JFrame {
 
         jLabel10.setText("Producto");
 
-        jcb_tipo_prod.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jcb_tipo_prod.setPreferredSize(new java.awt.Dimension(33, 35));
-
-        jcb_tamaño_prod.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jcb_tamaño_prod.setPreferredSize(new java.awt.Dimension(33, 35));
-
         jLabel11.setText("Tamaño");
-
-        jcb_categoria_prod.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jcb_categoria_prod.setPreferredSize(new java.awt.Dimension(33, 35));
 
         jLabel12.setText("Categoria");
 
         jLabel13.setText("Estilo");
-
-        jcb_estilo_prod.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jcb_estilo_prod.setPreferredSize(new java.awt.Dimension(33, 35));
-
-        jLabel14.setText("Cantidad a comprar");
 
         txt_cantidad_prod.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txt_cantidad_prod.addActionListener(new java.awt.event.ActionListener() {
@@ -355,6 +439,9 @@ public class ProductsAndServices extends javax.swing.JFrame {
             }
         });
         txt_cantidad_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_cantidad_prodKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_cantidad_prodKeyTyped(evt);
             }
@@ -379,18 +466,18 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(239, 243, 246));
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(112, 112, 112)));
 
-        btn_añadir_serv.setBackground(new java.awt.Color(255, 255, 255));
-        btn_añadir_serv.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        btn_añadir_serv.setForeground(new java.awt.Color(112, 112, 112));
-        btn_añadir_serv.setText("Añadir servicio");
-        btn_añadir_serv.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
-        btn_añadir_serv.setBorderPainted(false);
-        btn_añadir_serv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_añadir_serv.setFocusPainted(false);
-        btn_añadir_serv.setPreferredSize(new java.awt.Dimension(170, 28));
-        btn_añadir_serv.addActionListener(new java.awt.event.ActionListener() {
+        btn_habilited.setBackground(new java.awt.Color(255, 255, 255));
+        btn_habilited.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btn_habilited.setForeground(new java.awt.Color(112, 112, 112));
+        btn_habilited.setText("Habilitar");
+        btn_habilited.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
+        btn_habilited.setBorderPainted(false);
+        btn_habilited.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_habilited.setFocusPainted(false);
+        btn_habilited.setPreferredSize(new java.awt.Dimension(170, 28));
+        btn_habilited.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_añadir_servActionPerformed(evt);
+                btn_habilitedActionPerformed(evt);
             }
         });
 
@@ -414,6 +501,21 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jcb_servicio.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jcb_servicio.setPreferredSize(new java.awt.Dimension(33, 35));
 
+        btn_añadir_serv.setBackground(new java.awt.Color(255, 255, 255));
+        btn_añadir_serv.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btn_añadir_serv.setForeground(new java.awt.Color(112, 112, 112));
+        btn_añadir_serv.setText("Añadir servicio");
+        btn_añadir_serv.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(112, 112, 112), null));
+        btn_añadir_serv.setBorderPainted(false);
+        btn_añadir_serv.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_añadir_serv.setFocusPainted(false);
+        btn_añadir_serv.setPreferredSize(new java.awt.Dimension(170, 28));
+        btn_añadir_serv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_añadir_servActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -428,10 +530,14 @@ public class ProductsAndServices extends javax.swing.JFrame {
                         .addContainerGap(15, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_añadir_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_habilited, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_cancelar_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_añadir_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,12 +545,14 @@ public class ProductsAndServices extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar_serv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_añadir_serv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                    .addComponent(btn_habilited, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcb_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_añadir_serv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jLabel18.setText("Modo de pago");
@@ -461,6 +569,9 @@ public class ProductsAndServices extends javax.swing.JFrame {
             }
         });
         txt_total_pago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_total_pagoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_total_pagoKeyTyped(evt);
             }
@@ -475,6 +586,9 @@ public class ProductsAndServices extends javax.swing.JFrame {
             }
         });
         txt_efectivo_pago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_efectivo_pagoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_efectivo_pagoKeyTyped(evt);
             }
@@ -499,7 +613,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(239, 243, 246));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(112, 112, 112)));
 
-        jLabel23.setText("Cantidad restante");
+        jLabel23.setText("Deuda pendiente");
 
         jLabel24.setText("Cambio devolución");
 
@@ -553,8 +667,79 @@ public class ProductsAndServices extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_cambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        jcb_tipo_prod.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jcb_tipo_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_tipo_prodActionPerformed(evt);
+            }
+        });
+        jcb_tipo_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jcb_tipo_prodKeyTyped(evt);
+            }
+        });
+
+        jcb_tamaño_prod.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jcb_tamaño_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_tamaño_prodActionPerformed(evt);
+            }
+        });
+        jcb_tamaño_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jcb_tamaño_prodKeyTyped(evt);
+            }
+        });
+
+        jcb_categoria_prod.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jcb_categoria_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_categoria_prodActionPerformed(evt);
+            }
+        });
+        jcb_categoria_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jcb_categoria_prodKeyTyped(evt);
+            }
+        });
+
+        jcb_estilo_prod.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jcb_estilo_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_estilo_prodActionPerformed(evt);
+            }
+        });
+        jcb_estilo_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jcb_estilo_prodKeyTyped(evt);
+            }
+        });
+
+        jLabel26.setText("Cantidad");
+
+        jLabel27.setText("Compra");
+
+        txt_product_dispo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txt_product_dispo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_product_dispoActionPerformed(evt);
+            }
+        });
+        txt_product_dispo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_product_dispoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_product_dispoKeyTyped(evt);
+            }
+        });
+
+        jLabel28.setText("Cantidad");
+
+        jLabel29.setText("Disponible");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -570,39 +755,46 @@ public class ProductsAndServices extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcb_tipo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcb_tamaño_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(152, 152, 152)
+                            .addComponent(jcb_tipo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcb_tamaño_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(136, 136, 136)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcb_estilo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jcb_categoria_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jcb_categoria_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcb_estilo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(326, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel14)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txt_cantidad_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel20))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_total_pago, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                                    .addComponent(txt_efectivo_pago)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jcb_modo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel18)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel26)
+                                        .addComponent(jLabel27))
+                                    .addGap(30, 30, 30)
+                                    .addComponent(txt_cantidad_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel28)
+                                        .addComponent(jLabel29))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jcb_modo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel19)
-                                        .addComponent(jLabel20))
-                                    .addGap(32, 32, 32)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_total_pago)
-                                        .addComponent(txt_efectivo_pago)))))
-                        .addGap(154, 154, 154)
+                                    .addComponent(txt_product_dispo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(120, 120, 120)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -631,45 +823,57 @@ public class ProductsAndServices extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jcb_tipo_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jcb_categoria_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel12)))
+                        .addComponent(jLabel12)
+                        .addComponent(jcb_tipo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcb_categoria_prod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcb_tamaño_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel13)
-                    .addComponent(jcb_estilo_prod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcb_tamaño_prod)
+                    .addComponent(jcb_estilo_prod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_cantidad_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel15)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel16))
+                        .addComponent(txt_valor_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txt_cantidad_prod)
+                                .addComponent(txt_product_dispo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel27))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
+                        .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16))
-                    .addComponent(txt_valor_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel29)
+                        .addGap(8, 8, 8)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_valor_serv, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel18)
                             .addComponent(jcb_modo_pago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_total_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19))
@@ -678,8 +882,8 @@ public class ProductsAndServices extends javax.swing.JFrame {
                             .addComponent(txt_efectivo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel20)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(54, 54, 54))
         );
 
@@ -816,14 +1020,128 @@ public class ProductsAndServices extends javax.swing.JFrame {
 
     private void btn_liquidacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_liquidacionActionPerformed
 
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int cantidadRestante = 0;
+
+        String emptyCant = "";
+        String txt_cant_prod = txt_cantidad_prod.getText();
+        
+             
+        if (!txt_cant_prod.equals(emptyCant)){
+
+            String payCash = txt_efectivo_pago.getText();
+            getFecha();
+            
+            if (!payCash.equals("")) {
+                
+                // Si el pago es: Por cuota
+                if (selectedPay.equals("Por cuota")){
+                    
+
+                }
+                
+                // Si el pago es por: Venta directa
+                if (selectedPay.equals("Venta directa")){
+                    
+                    if (cashPay >= valuedPay){
+                        
+                        int result = JOptionPane.showConfirmDialog(null, "¿Generar salida del producto?", "Venta" ,dialog);  
+                        if (result == 0){
+                            
+                            String selectedService = jcb_servicio.getSelectedItem().toString();
+                            String selectedPago = jcb_modo_pago.getSelectedItem().toString();
+                            
+                            int cantidadDisponible = Integer.parseInt(cantidad_disponible);
+                            int cantidadCompra = Integer.parseInt(txt_cantidad_prod.getText());
+
+                            cantidadRestante = cantidadDisponible - cantidadCompra;
+                            
+                            if (selectedService.equals("Seleccione servicio")) {
+                                // Registro para Tabla - CAJA
+                                try {
+                                    // Se actualiza la cantidad disponible del producto en INVENTARIO
+                                    PreparedStatement ppsu;
+                                    ppsu = con.prepareStatement("UPDATE inventario SET cantidad_disponible='"+cantidadRestante+"' WHERE nombre_producto ='"+txt_nombre_prod.getText()+"'");                                                                         
+                                    ppsu.executeUpdate();
+                                    ppsu.close();
+
+                                    PreparedStatement pps = con.prepareStatement("INSERT INTO caja (nombre_prod_caja, tipo_prod_caja, categoria_prod_caja, tamaño_prod_caja, estilo_prod_caja, cantidad_compra, modo_pago, total_pago, efectivo, cambio, fecha_salida) VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+                                    pps.setString(1, txt_nombre_prod.getText());
+                                    pps.setString(2, jcb_tipo_prod.getText());
+                                    pps.setString(3, jcb_categoria_prod.getText());
+                                    pps.setString(4, jcb_tamaño_prod.getText());
+                                    pps.setString(5, jcb_estilo_prod.getText());
+                                    pps.setString(6, txt_cantidad_prod.getText());
+                                    pps.setString(7, selectedPago);
+                                    pps.setString(8, txt_total_pago.getText());
+                                    pps.setString(9, txt_efectivo_pago.getText());
+                                    pps.setString(10, txt_cambio.getText());
+                                    pps.setString(11, currentOutDate);
+                                        pps.executeUpdate();
+                                        pps.close();
+                                        JOptionPane.showMessageDialog(null, "Venta realizada");
+                                        limpiar();
+                                        bloquear();
+
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(ProductsAndServices.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }else{
+                                // Registro para Tabla - CAJA
+                                try {
+                                    // Se actualiza la cantidad disponible del producto en INVENTARIO
+                                    PreparedStatement ppsu;
+                                    ppsu = con.prepareStatement("UPDATE inventario SET cantidad_disponible='"+cantidadRestante+"' WHERE nombre_producto ='"+txt_nombre_prod.getText()+"'");                                                                         
+                                    ppsu.executeUpdate();
+                                    ppsu.close();
+
+                                    PreparedStatement pps = con.prepareStatement("INSERT INTO caja (nombre_prod_caja, tipo_prod_caja, categoria_prod_caja, tamaño_prod_caja, estilo_prod_caja, cantidad_compra, tipo_servicio, modo_pago, total_pago, efectivo, cambio, fecha_salida) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
+                                    pps.setString(1, txt_nombre_prod.getText());
+                                    pps.setString(2, jcb_tipo_prod.getText());
+                                    pps.setString(3, jcb_categoria_prod.getText());
+                                    pps.setString(4, jcb_tamaño_prod.getText());
+                                    pps.setString(5, jcb_estilo_prod.getText());
+                                    pps.setString(6, txt_cantidad_prod.getText());
+                                    pps.setString(7, selectedService);
+                                    pps.setString(8, selectedPago);
+                                    pps.setString(9, txt_total_pago.getText());
+                                    pps.setString(10, txt_efectivo_pago.getText());
+                                    pps.setString(11, txt_cambio.getText());
+                                    pps.setString(12, currentOutDate);
+                                        pps.executeUpdate();
+                                        pps.close();
+                                        JOptionPane.showMessageDialog(null, "Venta realizada");
+                                        limpiar();
+                                        bloquear();
+
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(ProductsAndServices.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        } 
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El efectivo ingresado no es valido, Por favor verifique");  
+                    }
+                }
+            }else{
+               JOptionPane.showMessageDialog(null, "No ha ingresado efectivo"); 
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar cantidad a comprar");
+        }
     }//GEN-LAST:event_btn_liquidacionActionPerformed
 
     private void btn_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ventaActionPerformed
-        // TODO add your handling code here:
+        // Boton Nueva venta
+        txt_nombre_prod.setEditable(true);
+        btn_cancelar.setEnabled(true);
+        limpiar();
     }//GEN-LAST:event_btn_ventaActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        // TODO add your handling code here:
+        // Boton Cancelar
+        bloquear();
+        limpiar();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void txt_nombre_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombre_prodActionPerformed
@@ -858,13 +1176,13 @@ public class ProductsAndServices extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_valor_prodKeyTyped
 
-    private void btn_añadir_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadir_servActionPerformed
-        // Boton Dar ingreso
-        
-    }//GEN-LAST:event_btn_añadir_servActionPerformed
-
     private void btn_cancelar_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar_servActionPerformed
-        // TODO add your handling code here:
+        // Boton Cancelar servicio
+        jcb_servicio.setEnabled(false);
+        btn_habilited.setEnabled(true);
+        btn_añadir_serv.setEnabled(false);
+        txt_valor_serv.setText("");
+        btn_cancelar_serv.setEnabled(false);
     }//GEN-LAST:event_btn_cancelar_servActionPerformed
 
     private void txt_total_pagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_total_pagoActionPerformed
@@ -880,7 +1198,12 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_efectivo_pagoActionPerformed
 
     private void txt_efectivo_pagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efectivo_pagoKeyTyped
-        // TODO add your handling code here:
+       char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_efectivo_pago.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_efectivo_pagoKeyTyped
 
     private void txt_valor_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valor_servActionPerformed
@@ -906,6 +1229,218 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private void txt_cambioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cambioKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_cambioKeyTyped
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // Boton buscar- Lupa
+        int dialog = JOptionPane.YES_NO_OPTION;
+        String emptySearch = "";
+        String txt_search = txt_nombre_prod.getText();
+        
+        if (!txt_search.equals(emptySearch)){
+            
+             try {
+                // Consulta en la BD
+                Statement stat = con.createStatement();
+                ResultSet rs = stat.executeQuery("SELECT nombre_producto, estado, tipo_producto, categoria, tamaño_producto, estilo_producto, precio_unitario, cantidad_disponible FROM inventario WHERE nombre_producto = '"+txt_search+"'");
+                rs.first();
+                // Selecciona los atributos deacuerdo a la posicion de la consulta sql
+                String name_product = rs.getString(1);
+                
+                    if (txt_search.equals(name_product)) {
+                        int result = JOptionPane.showConfirmDialog(null, "Producto encontrado, ¿Proceder con la venta?", "Generar venta" ,dialog);
+                        if (result == 0){ 
+                            getServices();
+                            
+                            String state_product = rs.getString(2);
+                            String type_product = rs.getString(3);
+                            String category_product = rs.getString(4);
+                            String width_product = rs.getString(5);
+                            String style_product = rs.getString(6);
+                            String precio_unitario = rs.getString(7);
+
+                            cantidad_disponible = rs.getString(8);
+                            Integer productDisponible = Integer.parseInt(cantidad_disponible);
+                            
+                            if (productDisponible == 0) {
+                                String StatedFalse = "No disponible";
+                                try {                                                                  
+                                    PreparedStatement pps;
+                                    pps = con.prepareStatement("UPDATE inventario SET estado ='"+StatedFalse+"' WHERE nombre_producto ='"+name_product+"'");                                                                         
+                                    pps.executeUpdate();
+                                    pps.close();
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(ProductsAndServices.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                JOptionPane.showMessageDialog(null, "Este producto se encuentra agotado, Por favor verifique el inventario");
+                                txt_estado_prod.setText(state_product);
+                            }else{
+                                modePay();
+                                desbloquear();
+                            
+                                // Bloque campo nombre producto
+                                txt_nombre_prod.setEditable(false);
+                                // Envio de los datos bd a campos de textos
+                                txt_estado_prod.setText(state_product);
+                                jcb_tipo_prod.setText(type_product);
+                                jcb_categoria_prod.setText(category_product);
+                                jcb_tamaño_prod.setText(width_product);
+                                jcb_estilo_prod.setText(style_product);
+                                txt_valor_prod.setText(precio_unitario);
+                                txt_product_dispo.setText(cantidad_disponible);  
+                            }
+
+                        }
+                    }              
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "No se ha encontrado el producto, por favor verifique su inventario");
+            } 
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha ingresado ningun producto para buscar");
+        }
+        
+       
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jcb_tipo_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_tipo_prodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tipo_prodActionPerformed
+
+    private void jcb_tipo_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tipo_prodKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tipo_prodKeyTyped
+
+    private void jcb_tamaño_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_tamaño_prodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tamaño_prodActionPerformed
+
+    private void jcb_tamaño_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_tamaño_prodKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_tamaño_prodKeyTyped
+
+    private void jcb_categoria_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_categoria_prodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_categoria_prodActionPerformed
+
+    private void jcb_categoria_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_categoria_prodKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_categoria_prodKeyTyped
+
+    private void jcb_estilo_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_estilo_prodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_estilo_prodActionPerformed
+
+    private void jcb_estilo_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcb_estilo_prodKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_estilo_prodKeyTyped
+
+    private void btn_añadir_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_añadir_servActionPerformed
+        // Boton añadir servicio
+        getPriceServices();
+  
+    }//GEN-LAST:event_btn_añadir_servActionPerformed
+
+    private void txt_efectivo_pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efectivo_pagoKeyReleased
+       // Genera la devolucion del pago 
+       
+        this.selectedPay = jcb_modo_pago.getSelectedItem().toString();
+        String payValued = txt_total_pago.getText();
+        String payCash = txt_efectivo_pago.getText();
+
+        if (!selectedPay.equals("Seleccione modo de pago")){
+            
+            this.valuedPay = Integer.parseInt(payValued);
+            this.cashPay = Integer.parseInt(payCash);
+
+            int valor_pagado = cashPay - valuedPay;
+            String enteroString = Integer.toString(Math.abs(valor_pagado));
+             
+            if (selectedPay.equals("Por cuota")) {
+                 
+                if (!txt_efectivo_pago.getText().equals("")) {
+
+                    if (cashPay <= valuedPay) {
+                        
+                       txt_cambio.setText("");
+                       
+                       txt_cantidad_restant.setText(enteroString); 
+                    }else{
+                        JOptionPane.showMessageDialog(null, "La cantidad ingresada cubre el pago total");
+                        txt_cantidad_restant.setText("");
+                    }
+
+                }else{
+                    txt_cantidad_restant.setText("");
+               } 
+            }
+            
+            if (selectedPay.equals("Venta directa")) {
+
+                if (!txt_efectivo_pago.getText().equals("")) {
+
+                    txt_cantidad_restant.setText("");
+                    txt_cambio.setText(enteroString); 
+                }else{
+                 txt_cambio.setText("");
+                }  
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un modo de pago");
+        }
+    }//GEN-LAST:event_txt_efectivo_pagoKeyReleased
+
+    // Campo - txt_total_pago - Pago total
+    private void txt_total_pagoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_total_pagoKeyReleased
+        String valuedService = txt_valor_serv.getText();
+        Integer serviceValued = Integer.parseInt(valuedService);
+    }//GEN-LAST:event_txt_total_pagoKeyReleased
+
+    // Campo - Cantidad Compra
+    private void txt_cantidad_prodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidad_prodKeyReleased
+       // Genera la devolucion del pago 
+        if (!txt_cantidad_prod.getText().equals("")) {
+
+            String cantidaProduct = txt_cantidad_prod.getText();
+            String priceProduct = txt_valor_prod.getText();
+            
+            Integer productDisponible = Integer.parseInt(cantidad_disponible);
+            Integer productCantida = Integer.parseInt(cantidaProduct);
+            Integer productPrice = Integer.parseInt(priceProduct);
+            
+            if (productCantida <= productDisponible) {
+                
+                this.totalPago = productCantida * productPrice;
+                String totalPagoString = Integer.toString(totalPago);
+                txt_total_pago.setText(totalPagoString); 
+            }else{
+                JOptionPane.showMessageDialog(null, "La cantidad ingresada supera la cantidad disponible en el inventario");
+            }
+
+        }else{
+         txt_total_pago.setText("");
+        }   
+    }//GEN-LAST:event_txt_cantidad_prodKeyReleased
+
+    private void txt_product_dispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_product_dispoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_product_dispoActionPerformed
+
+    private void txt_product_dispoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_product_dispoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_product_dispoKeyReleased
+
+    private void txt_product_dispoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_product_dispoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_product_dispoKeyTyped
+
+    private void btn_habilitedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_habilitedActionPerformed
+        // Boton Habilitar - servicio
+        btn_cancelar_serv.setEnabled(true);
+        jcb_servicio.setEnabled(true);
+        btn_habilited.setEnabled(false);
+        btn_añadir_serv.setEnabled(true);
+    }//GEN-LAST:event_btn_habilitedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -946,6 +1481,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private javax.swing.JButton btn_añadir_serv;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_cancelar_serv;
+    private javax.swing.JButton btn_habilited;
     private javax.swing.JButton btn_liquidacion;
     private javax.swing.JButton btn_venta;
     private javax.swing.JLabel jLabel1;
@@ -953,7 +1489,6 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -966,6 +1501,10 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -983,18 +1522,19 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JComboBox<String> jcb_categoria_prod;
-    private javax.swing.JComboBox<String> jcb_estilo_prod;
+    public static javax.swing.JTextField jcb_categoria_prod;
+    public static javax.swing.JTextField jcb_estilo_prod;
     private javax.swing.JComboBox<String> jcb_modo_pago;
     private javax.swing.JComboBox<String> jcb_servicio;
-    private javax.swing.JComboBox<String> jcb_tamaño_prod;
-    private javax.swing.JComboBox<String> jcb_tipo_prod;
+    public static javax.swing.JTextField jcb_tamaño_prod;
+    public static javax.swing.JTextField jcb_tipo_prod;
     public static javax.swing.JTextField txt_cambio;
     public static javax.swing.JTextField txt_cantidad_prod;
     public static javax.swing.JTextField txt_cantidad_restant;
     public static javax.swing.JTextField txt_efectivo_pago;
     public static javax.swing.JTextField txt_estado_prod;
     public static javax.swing.JTextField txt_nombre_prod;
+    public static javax.swing.JTextField txt_product_dispo;
     public static javax.swing.JTextField txt_total_pago;
     public static javax.swing.JTextField txt_valor_prod;
     public static javax.swing.JTextField txt_valor_serv;
