@@ -16,14 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import soft.java.conection.MySQLConnection;
-import static soft.java.interfaces.RegistryProducts.txt_date_produc;
 
 
 public class ProductsAndServices extends javax.swing.JFrame {
 
     int x, y, valuedPay = 0, cashPay = 0, totalPago = 0;
-    String cantidad_disponible, selectedPay = "", currentOutDate = "";
+    String currentOutDate = "", selectedPay, selectedService = "", cantidad_disponible;
     
+      
     // conector a la Base de datos
     MySQLConnection conex = new MySQLConnection();
     Connection con = conex.getConnectionBD();
@@ -33,8 +33,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Productos y Servicios");
-        this.setLocationRelativeTo(null);
-
+        this.setLocationRelativeTo(null);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         bloquear();
     }
         
@@ -119,7 +118,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }
     
     // Metodo para obtener datos 'tipo servicios' de la base datos
-    void getServices(){  
+    void getServices(){
         try {
             String sql = "SELECT DISTINCT nombre_servicio FROM servicios";
             PreparedStatement pps = con.prepareStatement(sql);
@@ -131,13 +130,13 @@ public class ProductsAndServices extends javax.swing.JFrame {
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No hay resultado");
-        } 
+        }
+        selectedService = jcb_servicio.getSelectedItem().toString();
     }
     
   
     // Metodo para obtener el precio del servicio
     void getPriceServices(){
-
         // Obtiene el valor de campo lista
         String selectedService = jcb_servicio.getSelectedItem().toString();
         String priceService = "";
@@ -162,8 +161,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
                 
                 rs.close();
             }
-
-            
+    
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio");
         } 
@@ -864,9 +862,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1019,9 +1015,9 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btn_liquidacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_liquidacionActionPerformed
-
+        
         int dialog = JOptionPane.YES_NO_OPTION;
-        int cantidadRestante = 0;
+        int cantidadRestante;
 
         String emptyCant = "";
         String txt_cant_prod = txt_cantidad_prod.getText();
@@ -1034,22 +1030,55 @@ public class ProductsAndServices extends javax.swing.JFrame {
             
             if (!payCash.equals("")) {
                 
+                /* -- SE CANCELO ESTA PARTE
                 // Si el pago es: Por cuota
                 if (selectedPay.equals("Por cuota")){
+                    SaleFee salefee = new SaleFee();
                     
+                    String name_product,
+                            tipo_prod,
+                            categoria_prod,
+                            tamaño_prod,
+                            estilo_prod,
+                            cantidad_prod,
+                            selectedService,
+                            selectedPay,
+                            total_pago,
+                            efectivo_pago,
+                            cant_restant;
+                    
+                    String deuda_pendiente = txt_cantidad_restant.getText();
+                    String stateCliente = "Deuda";
 
+                    // Envia la informacion a la interfaz SaleFee
+                    SaleFee.txt_estado.setText(stateCliente);
+                    SaleFee.txt_cant_restant.setText(deuda_pendiente);
+                    
+                    name_product = txt_nombre_prod.getText();
+                    tipo_prod = jcb_tipo_prod.getText();
+                    categoria_prod = jcb_categoria_prod.getText();
+                    tamaño_prod = jcb_tamaño_prod.getText();
+                    estilo_prod = jcb_estilo_prod.getText();
+                    cantidad_prod = txt_cantidad_prod.getText();
+                    //selectedService = jcb_servicio.getSelectedItem().toString();
+                    total_pago = txt_total_pago.getText();
+                    efectivo_pago = txt_efectivo_pago.getText();
+                    cant_restant = txt_cantidad_restant.getText();
+                    
+                    System.out.println(txt_nombre_prod.getText());
+                    salefee.setVisible(true);
                 }
-                
+                */
                 // Si el pago es por: Venta directa
                 if (selectedPay.equals("Venta directa")){
                     
                     if (cashPay >= valuedPay){
-                        
+
                         int result = JOptionPane.showConfirmDialog(null, "¿Generar salida del producto?", "Venta" ,dialog);  
                         if (result == 0){
-                            
-                            String selectedService = jcb_servicio.getSelectedItem().toString();
+
                             String selectedPago = jcb_modo_pago.getSelectedItem().toString();
+                             this.selectedService = jcb_servicio.getSelectedItem().toString();
                             
                             int cantidadDisponible = Integer.parseInt(cantidad_disponible);
                             int cantidadCompra = Integer.parseInt(txt_cantidad_prod.getText());
@@ -1524,8 +1553,8 @@ public class ProductsAndServices extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     public static javax.swing.JTextField jcb_categoria_prod;
     public static javax.swing.JTextField jcb_estilo_prod;
-    private javax.swing.JComboBox<String> jcb_modo_pago;
-    private javax.swing.JComboBox<String> jcb_servicio;
+    public static javax.swing.JComboBox<String> jcb_modo_pago;
+    public static javax.swing.JComboBox<String> jcb_servicio;
     public static javax.swing.JTextField jcb_tamaño_prod;
     public static javax.swing.JTextField jcb_tipo_prod;
     public static javax.swing.JTextField txt_cambio;

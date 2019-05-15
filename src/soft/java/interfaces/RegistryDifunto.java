@@ -785,19 +785,20 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // Boton Guardar
-        
+        String stateCliente = "Sin deuda";
         // Registro para Tabla - Cliente solicitante
         try {
-            PreparedStatement pps = con.prepareStatement("INSERT INTO cliente_solicitante (nombre_cliente, apellido_cliente, tipo_documento, numero_documento, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, msm_recordatorio) VALUES (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pps = con.prepareStatement("INSERT INTO cliente_solicitante (nombre_cliente, apellido_cliente, tipo_documento, numero_documento, estado_cliente, nombre_difunto, apellido_difunto, fecha_nacimiento, fecha_fallecimiento, msm_recordatorio) VALUES (?,?,?,?,?,?,?,?,?,?)");
             pps.setString(1, txt_name_clien.getText());
             pps.setString(2, txt_apellido_clien.getText());
             pps.setString(3, txt_typedocu_clien.getText());
             pps.setString(4, txt_num_clien.getText());
-            pps.setString(5, txt_name_difun.getText());
-            pps.setString(6, txt_apellido_difun.getText());
-            pps.setString(7, txt_nacimiento_difun.getText());
-            pps.setString(8, txt_kill_difun.getText());
-            pps.setString(9, txt_msm_difun.getText());
+            pps.setString(5, stateCliente);
+            pps.setString(6, txt_name_difun.getText());
+            pps.setString(7, txt_apellido_difun.getText());
+            pps.setString(8, txt_nacimiento_difun.getText());
+            pps.setString(9, txt_kill_difun.getText());
+            pps.setString(10, txt_msm_difun.getText());
                 pps.executeUpdate();
                 pps.close();
                 JOptionPane.showMessageDialog(null, "Datos Almacenados");
