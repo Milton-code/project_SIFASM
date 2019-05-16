@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
+import static soft.java.interfaces.ProductsAndServices.txt_efectivo_pago;
+import static soft.java.interfaces.ProductsAndServices.txt_nombre_prod;
 
 
 public class RegistryDifunto extends javax.swing.JFrame {
@@ -647,6 +649,11 @@ public class RegistryDifunto extends javax.swing.JFrame {
 
         txt_msm_difun.setColumns(20);
         txt_msm_difun.setRows(5);
+        txt_msm_difun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_msm_difunKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(txt_msm_difun);
 
         jLabel21.setText("Mensaje");
@@ -764,7 +771,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_apellido_clienActionPerformed
 
     private void txt_apellido_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_apellido_clienKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_apellido_clien.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_apellido_clienKeyTyped
 
     private void txt_typedocu_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_typedocu_clienActionPerformed
@@ -772,7 +782,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_typedocu_clienActionPerformed
 
     private void txt_typedocu_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_typedocu_clienKeyTyped
-        // TODO add your handling code here:
+       int characterLimit = 15;
+        if (txt_typedocu_clien.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_typedocu_clienKeyTyped
 
     private void txt_num_clienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_num_clienActionPerformed
@@ -780,7 +793,12 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_num_clienActionPerformed
 
     private void txt_num_clienKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_clienKeyTyped
-        // TODO add your handling code here:
+        char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_num_clien.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_num_clienKeyTyped
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -894,7 +912,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_name_difunActionPerformed
 
     private void txt_name_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_name_difunKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_name_difun.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_name_difunKeyTyped
 
     private void txt_apellido_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellido_difunActionPerformed
@@ -902,7 +923,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_apellido_difunActionPerformed
 
     private void txt_apellido_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_apellido_difunKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_apellido_difun.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_apellido_difunKeyTyped
 
     private void txt_nacimiento_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nacimiento_difunActionPerformed
@@ -910,7 +934,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_nacimiento_difunActionPerformed
 
     private void txt_nacimiento_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nacimiento_difunKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_nacimiento_difun.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_nacimiento_difunKeyTyped
 
     private void txt_kill_difunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_kill_difunActionPerformed
@@ -918,7 +945,10 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_kill_difunActionPerformed
 
     private void txt_kill_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kill_difunKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_kill_difun.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_kill_difunKeyTyped
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
@@ -932,6 +962,13 @@ public class RegistryDifunto extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_formMousePressed
+
+    private void txt_msm_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_msm_difunKeyTyped
+        int characterLimit = 149;
+        if (txt_msm_difun.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_msm_difunKeyTyped
 
     /**
      * @param args the command line arguments

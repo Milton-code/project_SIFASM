@@ -763,7 +763,10 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_category_producActionPerformed
 
     private void txt_category_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_category_producKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 49;
+        if (txt_category_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_category_producKeyTyped
 
     private void txt_type_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_type_producActionPerformed
@@ -771,7 +774,10 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_type_producActionPerformed
 
     private void txt_type_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_type_producKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 49;
+        if (txt_type_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_type_producKeyTyped
 
     private void txt_tamaño_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tamaño_producActionPerformed
@@ -779,7 +785,10 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tamaño_producActionPerformed
 
     private void txt_tamaño_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tamaño_producKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_tamaño_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_tamaño_producKeyTyped
 
     private void txt_date_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_date_producActionPerformed
@@ -787,7 +796,10 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_date_producActionPerformed
 
     private void txt_date_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_date_producKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 9;
+        if (txt_date_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_date_producKeyTyped
 
     private void txt_style_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_style_producActionPerformed
@@ -795,7 +807,10 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_style_producActionPerformed
 
     private void txt_style_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_style_producKeyTyped
-        // TODO add your handling code here:
+        int characterLimit = 15;
+        if (txt_style_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_style_producKeyTyped
 
     private void txt_price_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_price_producActionPerformed
@@ -803,7 +818,12 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_price_producActionPerformed
 
     private void txt_price_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_price_producKeyTyped
-        // TODO add your handling code here:
+        char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_price_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_price_producKeyTyped
 
     private void txt_cantidad_producActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cantidad_producActionPerformed
@@ -811,7 +831,12 @@ public class RegistryProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_cantidad_producActionPerformed
 
     private void txt_cantidad_producKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidad_producKeyTyped
-        // TODO add your handling code here:
+        char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_cantidad_produc.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_cantidad_producKeyTyped
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed

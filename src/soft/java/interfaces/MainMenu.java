@@ -3,6 +3,8 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import soft.java.conection.MySQLConnection;
@@ -35,6 +37,8 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btn_about = new javax.swing.JButton();
+        btn_ayuda = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -110,12 +114,58 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        btn_about.setBackground(new java.awt.Color(111, 130, 148));
+        btn_about.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_about.setForeground(new java.awt.Color(111, 130, 148));
+        btn_about.setText("Acerca");
+        btn_about.setBorder(null);
+        btn_about.setBorderPainted(false);
+        btn_about.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_about.setFocusable(false);
+        btn_about.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_about.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_about.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_aboutMouseClicked(evt);
+            }
+        });
+        btn_about.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aboutActionPerformed(evt);
+            }
+        });
+
+        btn_ayuda.setBackground(new java.awt.Color(111, 130, 148));
+        btn_ayuda.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
+        btn_ayuda.setForeground(new java.awt.Color(111, 130, 148));
+        btn_ayuda.setText("Ayuda");
+        btn_ayuda.setBorder(null);
+        btn_ayuda.setBorderPainted(false);
+        btn_ayuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ayuda.setFocusable(false);
+        btn_ayuda.setMargin(new java.awt.Insets(48, 16, 16, 48));
+        btn_ayuda.setPreferredSize(new java.awt.Dimension(189, 50));
+        btn_ayuda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ayudaMouseClicked(evt);
+            }
+        });
+        btn_ayuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ayudaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(1180, Short.MAX_VALUE)
+                .addGap(251, 251, 251)
+                .addComponent(btn_ayuda, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_about, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
@@ -127,8 +177,11 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_about, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(btn_ayuda, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, -1));
@@ -885,6 +938,30 @@ public class MainMenu extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jPanel10MouseExited
 
+    private void btn_aboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aboutMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_aboutMouseClicked
+
+    private void btn_ayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ayudaMouseClicked
+        File urldest = new File(".\\manual\\Guia-usuario.pdf");
+        String dest = urldest.toString(); 
+        try {
+            ProcessBuilder p = new ProcessBuilder();
+            p.command("cmd.exe", "/c", dest);
+            p.start();
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_btn_ayudaMouseClicked
+
+    private void btn_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ayudaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_ayudaActionPerformed
+
+    private void btn_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aboutActionPerformed
+        About about = new About();
+        about.setVisible(true);
+    }//GEN-LAST:event_btn_aboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -921,6 +998,8 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_about;
+    private javax.swing.JButton btn_ayuda;
     private javax.swing.JButton btn_closeSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

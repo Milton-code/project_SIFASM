@@ -170,7 +170,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
     // Metodo para modo de pago
     void modePay(){  
         jcb_modo_pago.addItem("Seleccione modo de pago");
-        jcb_modo_pago.addItem("Por cuota");
+        //jcb_modo_pago.addItem("Por cuota");
         jcb_modo_pago.addItem("Venta directa");
     }
  
@@ -1178,7 +1178,10 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_nombre_prodActionPerformed
 
     private void txt_nombre_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombre_prodKeyTyped
-
+        int characterLimit = 15;
+        if (txt_nombre_prod.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_nombre_prodKeyTyped
 
     private void txt_estado_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_estado_prodActionPerformed
@@ -1194,7 +1197,12 @@ public class ProductsAndServices extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_cantidad_prodActionPerformed
 
     private void txt_cantidad_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidad_prodKeyTyped
-        // TODO add your handling code here:
+        char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_cantidad_prod.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_cantidad_prodKeyTyped
 
     private void txt_valor_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_valor_prodActionPerformed

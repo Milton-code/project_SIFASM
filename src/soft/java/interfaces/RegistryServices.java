@@ -438,6 +438,11 @@ public class RegistryServices extends javax.swing.JFrame {
 
         txa_descipcion_serv.setColumns(20);
         txa_descipcion_serv.setRows(5);
+        txa_descipcion_serv.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txa_descipcion_servKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(txa_descipcion_serv);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -620,7 +625,12 @@ public class RegistryServices extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void txt_precio_servKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precio_servKeyTyped
-        // TODO add your handling code here:
+        char inputText = evt.getKeyChar();
+        int characterLimit = 10;
+        if (inputText<'0' || inputText>'9') evt.consume();
+        if (txt_precio_serv.getText().length() >= characterLimit){
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_precio_servKeyTyped
 
     private void txt_precio_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precio_servActionPerformed
@@ -638,6 +648,13 @@ public class RegistryServices extends javax.swing.JFrame {
     private void txt_nombre_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombre_servActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nombre_servActionPerformed
+
+    private void txa_descipcion_servKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txa_descipcion_servKeyTyped
+        int characterLimit = 149;
+        if (txa_descipcion_serv.getText().length() >= characterLimit){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txa_descipcion_servKeyTyped
 
     /**
      * @param args the command line arguments
