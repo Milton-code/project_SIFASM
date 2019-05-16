@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
@@ -27,6 +28,7 @@ public class ConsultSales extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Registro de ventas");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         this.setLocationRelativeTo(null);
         ShowTable("");
     }
@@ -46,7 +48,6 @@ public class ConsultSales extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         rbt_nameProducts = new javax.swing.JRadioButton();
-        rbt_dateIngreso = new javax.swing.JRadioButton();
         rbt_dateSalida = new javax.swing.JRadioButton();
         btn_search = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
@@ -157,14 +158,6 @@ public class ConsultSales extends javax.swing.JFrame {
             }
         });
 
-        rbt_dateIngreso.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        rbt_dateIngreso.setText("Fecha ingreso");
-        rbt_dateIngreso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbt_dateIngresoActionPerformed(evt);
-            }
-        });
-
         rbt_dateSalida.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         rbt_dateSalida.setText("Fecha salida");
 
@@ -193,15 +186,13 @@ public class ConsultSales extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(rbt_nameProducts)
-                .addGap(69, 69, 69)
-                .addComponent(rbt_dateIngreso)
-                .addGap(71, 71, 71)
+                .addGap(136, 136, 136)
                 .addComponent(rbt_dateSalida)
-                .addGap(89, 89, 89)
+                .addGap(140, 140, 140)
                 .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +200,6 @@ public class ConsultSales extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbt_nameProducts)
-                    .addComponent(rbt_dateIngreso)
                     .addComponent(rbt_dateSalida)
                     .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -272,23 +262,22 @@ public class ConsultSales extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();       
             modelo.addColumn("ID Producto");
             modelo.addColumn("Nombre producto");
-            modelo.addColumn("Cantidad compra");
+            modelo.addColumn("Tipo producto");
+            modelo.addColumn("Categoria");
+            modelo.addColumn("Tamaño");
             modelo.addColumn("Modo pago");
-            modelo.addColumn("Efectivo");
-            modelo.addColumn("Fecha ingreso");
-            modelo.addColumn("Fecha salida");
-            modelo.addColumn("Cantidad restante");
             modelo.addColumn("Total pago");
-            modelo.addColumn("Cantidad disponible");
-            modelo.addColumn("Estado");
+            modelo.addColumn("Efectivo");
+            modelo.addColumn("Cambio");
+            modelo.addColumn("Fecha salida");
                 table_sales.setModel(modelo);         
             String sql = "";
             if(id_search.equals("")){
-                sql = "SELECT id_caja, nombre_prod_caja, cantidad_compra, modo_pago, efectivo, fecha_ingreso, fecha_salida, cantidad_restante, total_pago, cantidad_disponible, estado FROM caja INNER JOIN inventario ON caja.id_inventario1 = inventario.id_inventario;";
+                sql = "SELECT id_caja, nombre_prod_caja, tipo_prod_caja, categoria_prod_caja, tamaño_prod_caja, modo_pago, total_pago, efectivo, cambio, fecha_salida FROM caja;";
             }else{
-                sql = "SELECT id_caja, nombre_prod_caja, cantidad_compra, modo_pago, efectivo, fecha_ingreso, fecha_salida, cantidad_restante, total_pago, cantidad_disponible, estado FROM caja INNER JOIN inventario ON caja.id_inventario1 = inventario.id_inventario WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
+                sql = "SELECT id_caja, nombre_prod_caja, tipo_prod_caja, categoria_prod_caja, tamaño_prod_caja, modo_pago, total_pago, efectivo, cambio, fecha_salida FROM caja WHERE "+searchAttribute+" LIKE '"+id_search+"%'";
             }
-            String datos[] = new String[11];
+            String datos[] = new String[10];
             Statement st;
         try {
             st = con.createStatement();
@@ -304,7 +293,6 @@ public class ConsultSales extends javax.swing.JFrame {
                     datos[7] = rs.getString(8); /*Cantidad restante*/
                     datos[8] = rs.getString(9); /*Total pago*/
                     datos[9] = rs.getString(10); /*Cantidad disponible*/
-                    datos[10] = rs.getString(11); /*Estado*/
                         modelo.addRow(datos);
                 }
                  table_sales.setModel(modelo);
@@ -338,21 +326,15 @@ public class ConsultSales extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbt_nameProductsActionPerformed
 
-    private void rbt_dateIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_dateIngresoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbt_dateIngresoActionPerformed
-
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // Boton Buscar
         buttonGroupSearch.add(rbt_nameProducts);
-        buttonGroupSearch.add(rbt_dateIngreso);
         buttonGroupSearch.add(rbt_dateSalida);
 
         if(rbt_nameProducts.isSelected()){
             searchAttribute = "nombre_prod_caja";
             ShowTable(txt_buscar.getText());
         }
-        else if(rbt_dateIngreso.isSelected()){searchAttribute = "fecha_ingreso"; ShowTable(txt_buscar.getText());}
         else if(rbt_dateSalida.isSelected()){searchAttribute = "fecha_salida"; ShowTable(txt_buscar.getText());}
         else{JOptionPane.showMessageDialog(null, "No se selecciono ningun tipo de Búsqueda"+"");}
     }//GEN-LAST:event_btn_searchActionPerformed
@@ -417,7 +399,6 @@ public class ConsultSales extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbt_dateIngreso;
     private javax.swing.JRadioButton rbt_dateSalida;
     private javax.swing.JRadioButton rbt_nameProducts;
     private javax.swing.JTable table_sales;

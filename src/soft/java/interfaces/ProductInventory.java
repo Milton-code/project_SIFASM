@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
@@ -28,6 +29,7 @@ public class ProductInventory extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Producto Inventario");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         this.setLocationRelativeTo(null);
         ShowTable("");
     }

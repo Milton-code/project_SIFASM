@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soft.java.conection.MySQLConnection;
 
@@ -32,6 +33,7 @@ public class ProductsAndServices extends javax.swing.JFrame {
     public ProductsAndServices() {
         this.setUndecorated(true);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         setTitle("Productos y Servicios");
         this.setLocationRelativeTo(null);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         bloquear();

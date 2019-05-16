@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
@@ -32,6 +33,7 @@ public class RegistryProducts extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Registro Productos");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         this.setLocationRelativeTo(null);
         bloquear();
         ShowTable();

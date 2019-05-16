@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import soft.java.conection.MySQLConnection;
@@ -30,6 +31,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Matricula Difunto");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         this.setLocationRelativeTo(null);
         bloquear();
         ShowTable();
@@ -923,7 +925,7 @@ public class RegistryDifunto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_apellido_difunActionPerformed
 
     private void txt_apellido_difunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_apellido_difunKeyTyped
-        int characterLimit = 15;
+        int characterLimit = 49;
         if (txt_apellido_difun.getText().length() >= characterLimit){
             evt.consume();
         }

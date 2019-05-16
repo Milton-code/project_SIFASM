@@ -3,6 +3,7 @@ package soft.java.interfaces;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class About extends javax.swing.JFrame {
@@ -12,7 +13,7 @@ public class About extends javax.swing.JFrame {
     public About() {
         this.setUndecorated(true);
         initComponents();
-        //this.setUndecorated(true);
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         setTitle("Acerca");
         this.setLocationRelativeTo(null);
     }
