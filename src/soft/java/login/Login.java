@@ -2,6 +2,7 @@ package soft.java.login;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soft.java.interfaces.MainMenu;
 
@@ -13,7 +14,9 @@ public class Login extends javax.swing.JFrame {
         this.setUndecorated(true);
         initComponents();
         setTitle("Inicio de Sesión");
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
         this.setLocationRelativeTo(null);
+        txt_password.setFont(txt_password.getFont().deriveFont(18f));
     }
 
     @SuppressWarnings("unchecked")
@@ -32,6 +35,7 @@ public class Login extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        chck_showpass = new javax.swing.JCheckBox();
         btn_closeSesion = new javax.swing.JButton();
         btn_sesion1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -102,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/soft/java/files/cross350px.png"))); // NOI18N
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, -10, 260, -1));
 
-        txt_name.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txt_name.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         txt_name.setCaretColor(new java.awt.Color(33, 52, 67));
         txt_name.setMargin(new java.awt.Insets(0, 10, 0, 10));
         jPanel3.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 230, 40));
@@ -114,7 +118,8 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/soft/java/files/lock32px.png"))); // NOI18N
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
-        txt_password.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        txt_password.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txt_password.setToolTipText("");
         txt_password.setMargin(new java.awt.Insets(0, 10, 0, 10));
         jPanel3.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 230, 40));
 
@@ -127,6 +132,17 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(242, 242, 242));
         jLabel5.setText("Usuario");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
+
+        chck_showpass.setBackground(new java.awt.Color(111, 130, 148));
+        chck_showpass.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        chck_showpass.setForeground(new java.awt.Color(255, 255, 255));
+        chck_showpass.setText("Mostrar contraseña");
+        chck_showpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chck_showpassActionPerformed(evt);
+            }
+        });
+        jPanel3.add(chck_showpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 276, -1, -1));
 
         btn_closeSesion.setBackground(new java.awt.Color(111, 130, 148));
         btn_closeSesion.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
@@ -162,7 +178,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(239, 243, 246));
-        jLabel8.setText("FIFASM");
+        jLabel8.setText("SIFASM");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(239, 243, 246));
@@ -289,6 +305,17 @@ public class Login extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_jLabel7MouseClicked
 
+    private void chck_showpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chck_showpassActionPerformed
+        // Show password        
+        if(chck_showpass.isSelected()){
+            txt_password.setEchoChar((char)0);
+            txt_password.setFont(txt_password.getFont().deriveFont(26f));
+        }else{
+            txt_password.setEchoChar('\u2022');
+            txt_password.setFont(txt_password.getFont().deriveFont(26f));
+        }
+    }//GEN-LAST:event_chck_showpassActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -327,6 +354,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_closeSesion;
     private javax.swing.JButton btn_sesion1;
+    private javax.swing.JCheckBox chck_showpass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

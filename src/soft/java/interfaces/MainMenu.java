@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import soft.java.conection.MySQLConnection;
 import soft.java.login.Login;
@@ -24,7 +25,7 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
         setTitle("Menú principal");
         this.setLocationRelativeTo(null);
-
+        setIconImage(new ImageIcon(getClass().getResource("/soft/java/files/logo-fifasm.png")).getImage());
     }
 
 
@@ -190,7 +191,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(239, 243, 246));
-        jLabel8.setText("FIFASM");
+        jLabel8.setText("SIFASM");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(239, 243, 246));
@@ -943,14 +944,18 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_aboutMouseClicked
 
     private void btn_ayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ayudaMouseClicked
-        File urldest = new File(".\\manual\\Guia-usuario.pdf");
-        String dest = urldest.toString(); 
-        try {
-            ProcessBuilder p = new ProcessBuilder();
-            p.command("cmd.exe", "/c", dest);
-            p.start();
-        } catch (IOException ex) {
-        }
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea abrir el manual de usuario?", "Manual de Usuario", dialog);
+        if (result == 0) {
+            File urldest = new File(".\\manual_usuario\\Manual_usuario.pdf");
+            String dest = urldest.toString(); 
+            try {
+                ProcessBuilder p = new ProcessBuilder();
+                p.command("cmd.exe", "/c", dest);
+                p.start();
+            } catch (IOException ex) {
+            }
+        } 
     }//GEN-LAST:event_btn_ayudaMouseClicked
 
     private void btn_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ayudaActionPerformed
